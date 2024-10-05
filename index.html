@@ -1,1 +1,100 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Plant-a-base</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .feature-icon {
+            font-size: 2rem;
+            color: #28a745;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><i class="fas fa-leaf me-2"></i>Plant-a-base</a>
+            <div class="navbar-nav">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a class="nav-link" href="#">Database</a>
+                <a class="nav-link" href="#">Contact</a>
+            </div>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search plants..." aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-5">Welcome to Plant-a-base</h1>
+        
+        <div class="row mb-5">
+            <div class="col-md-6">
+                <h2>About Plant-a-base</h2>
+                <p>Plant-a-base is your comprehensive digital garden companion. We've created a user-friendly platform that provides detailed information about various plants, helping gardeners, botanists, and plant enthusiasts make informed decisions and care for their green friends.</p>
+            </div>
+            <div class="col-md-6">
+                <img src="/api/placeholder/500/300" alt="Plant-a-base Overview" class="img-fluid rounded">
+            </div>
+        </div>
+
+        <h2 class="text-center mb-4">Key Features</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <i class="fas fa-image feature-icon mb-3"></i>
+                    <h3>Visual Lifecycle</h3>
+                    <p>View high-quality images of plants at different stages: seed, plant, flower, and fruit.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <i class="fas fa-calendar-alt feature-icon mb-3"></i>
+                    <h3>Growing Calendar</h3>
+                    <p>Understand the optimal growing seasons for each plant with our monthly view calendar.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <i class="fas fa-info-circle feature-icon mb-3"></i>
+                    <h3>Detailed Information</h3>
+                    <p>Access comprehensive data including germination time, harvest time, planting zones, and more.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-md-8 offset-md-2">
+                <h2 class="text-center mb-4">What We've Created</h2>
+                <p>We've developed a user-friendly template for displaying detailed plant information. Each plant page includes:</p>
+                <ul>
+                    <li>High-quality images showcasing different stages of plant growth</li>
+                    <li>Detailed plant descriptions</li>
+                    <li>A monthly growing calendar</li>
+                    <li>Key plant data such as days to germination, days to harvest, and planting specifications</li>
+                    <li>A record-keeping section for tracking plant progress</li>
+                </ul>
+                <p>Our goal is to provide a comprehensive resource for plant enthusiasts, making it easier than ever to grow and care for a wide variety of plants.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="text-muted text-center">&copy; 2024 Plant-a-base. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
