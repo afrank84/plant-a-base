@@ -33,7 +33,6 @@
     </style>
 </head>
 <body>
-    <div id="menu-placeholder"></div>
     <div class="container mt-5">
         <h1 class="text-center mb-4">Plant Database</h1>
         
@@ -89,87 +88,87 @@
         </div>
     </footer>
 
-    <script src="js/menu.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
-        const plants = [
-            { parent: 'Tomato', variety: 'Solanum lycopersicum', type: 'Vegetable', growingMonths: [5, 6, 7, 8, 9, 10] },
-            { parent: 'Lavender', variety: 'Lavandula', type: 'Herb', growingMonths: [6, 7, 8] },
-            { parent: 'Aloe Vera', variety: 'Aloe barbadensis miller', type: 'Succulent', growingMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] },
-            { parent: 'Maple Tree', variety: 'Acer', type: 'Tree', growingMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] },
-            { parent: 'Rose', variety: 'Rosa', type: 'Flower', growingMonths: [5, 6, 7, 8, 9, 10, 11] },
-            { parent: 'Basil', variety: 'Ocimum basilicum', type: 'Herb', growingMonths: [6, 7, 8, 9] },
-            { parent: 'Fern', variety: 'Polypodiopsida', type: 'Perennial', growingMonths: [4, 5, 6, 7, 8, 9, 10, 11] },
-            { parent: 'Cactus', variety: 'Cactaceae', type: 'Succulent', growingMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] }
-        ];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-        function createGrowingSeasonVisual(growingMonths) {
-            let html = '<div>';
-            months.forEach((month, index) => {
-                const isGrowing = growingMonths.includes(index + 1);
-                html += `<div class="month-box ${isGrowing ? 'growing-month' : ''}" title="${month}">${month}</div>`;
-            });
-            html += '</div>';
-            return html;
-        }
-
-        function populateTable(filteredPlants) {
-            const tableBody = document.getElementById('plantTableBody');
-            tableBody.innerHTML = ''; // Clear existing rows
-            filteredPlants.forEach(plant => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${plant.parent}</td>
-                    <td>${plant.variety}</td>
-                    <td>${plant.type}</td>
-                    <td class="growing-season-column">${createGrowingSeasonVisual(plant.growingMonths)}</td>
-                `;
-                tableBody.appendChild(row);
-            });
-        }
-
-        function filterPlants() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const selectedSeason = document.getElementById('seasonSelect').value.toLowerCase();
-            const selectedType = document.getElementById('typeSelect').value;
-
-            const filteredPlants = plants.filter(plant => {
-                const matchesSearch = plant.parent.toLowerCase().includes(searchTerm) ||
-                                      plant.variety.toLowerCase().includes(searchTerm) ||
-                                      plant.type.toLowerCase().includes(searchTerm) ||
-                                      months.some((month, index) => 
-                                          month.toLowerCase().includes(searchTerm) && 
-                                          plant.growingMonths.includes(index + 1)
-                                      );
-                
-                const matchesType = selectedType === '' || plant.type === selectedType;
-                
-                let matchesSeason = true;
-                if (selectedSeason !== '') {
-                    const seasonMonths = {
-                        'spring': [3, 4, 5],
-                        'summer': [6, 7, 8],
-                        'fall': [9, 10, 11],
-                        'winter': [12, 1, 2],
-                        'year-round': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-                    };
-                    matchesSeason = seasonMonths[selectedSeason].some(month => plant.growingMonths.includes(month));
-                }
-
-                return matchesSearch && matchesType && matchesSeason;
-            });
-
-            populateTable(filteredPlants);
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            populateTable(plants);
-            document.getElementById('searchInput').addEventListener('input', filterPlants);
-            document.getElementById('seasonSelect').addEventListener('change', filterPlants);
-            document.getElementById('typeSelect').addEventListener('change', filterPlants);
+    function createGrowingSeasonVisual(growingMonths) {
+        let html = '<div>';
+        months.forEach((month, index) => {
+            const isGrowing = growingMonths.includes(index + 1);
+            html += `<div class="month-box ${isGrowing ? 'growing-month' : ''}" title="${month}">${month}</div>`;
         });
+        html += '</div>';
+        return html;
+    }
+
+    function populateTable(plants) {
+        const tableBody = document.getElementById('plantTableBody');
+        tableBody.innerHTML = ''; // Clear existing rows
+        plants.forEach(plant => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${plant.parent}</td>
+                <td>${plant.variety}</td>
+                <td>${plant.type}</td>
+                <td class="growing-season-column">${createGrowingSeasonVisual(plant.growingMonths)}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+
+    function filterPlants(plants) {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        const selectedSeason = document.getElementById('seasonSelect').value.toLowerCase();
+        const selectedType = document.getElementById('typeSelect').value;
+
+        return plants.filter(plant => {
+            const matchesSearch = plant.parent.toLowerCase().includes(searchTerm) ||
+                                  plant.variety.toLowerCase().includes(searchTerm) ||
+                                  plant.type.toLowerCase().includes(searchTerm) ||
+                                  months.some((month, index) => 
+                                      month.toLowerCase().includes(searchTerm) && 
+                                      plant.growingMonths.includes(index + 1)
+                                  );
+            
+            const matchesType = selectedType === '' || plant.type === selectedType;
+            
+            let matchesSeason = true;
+            if (selectedSeason !== '') {
+                const seasonMonths = {
+                    'spring': [3, 4, 5],
+                    'summer': [6, 7, 8],
+                    'fall': [9, 10, 11],
+                    'winter': [12, 1, 2],
+                    'year-round': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                };
+                matchesSeason = seasonMonths[selectedSeason].some(month => plant.growingMonths.includes(month));
+            }
+
+            return matchesSearch && matchesType && matchesSeason;
+        });
+    }
+
+    let allPlants = [];
+
+    function handleFilterChange() {
+        const filteredPlants = filterPlants(allPlants);
+        populateTable(filteredPlants);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        fetch('plants-data.json')
+            .then(response => response.json())
+            .then(data => {
+                allPlants = data.plants;
+                populateTable(allPlants);
+                
+                document.getElementById('searchInput').addEventListener('input', handleFilterChange);
+                document.getElementById('seasonSelect').addEventListener('change', handleFilterChange);
+                document.getElementById('typeSelect').addEventListener('change', handleFilterChange);
+            })
+            .catch(error => console.error('Error loading plant data:', error));
+    });
     </script>
 </body>
 </html>
