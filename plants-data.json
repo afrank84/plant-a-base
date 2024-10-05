@@ -1,0 +1,19 @@
+{
+  "plants": [
+    { "parent": "Tomato", "variety": "Solanum lycopersicum", "type": "Vegetable", "growingMonths": [5, 6, 7, 8, 9, 10] },
+    { "parent": "Lavender", "variety": "Lavandula", "type": "Herb", "growingMonths": [6, 7, 8] },
+    { "parent": "Aloe Vera", "variety": "Aloe barbadensis miller", "type": "Succulent", "growingMonths": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] },
+    { "parent": "Maple Tree", "variety": "Acer", "type": "Tree", "growingMonths": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] },
+    { "parent": "Rose", "variety": "Rosa", "type": "Flower", "growingMonths": [5, 6, 7, 8, 9, 10, 11] },
+    { "parent": "Basil", "variety": "Ocimum basilicum", "type": "Herb", "growingMonths": [6, 7, 8, 9] },
+    { "parent": "Fern", "variety": "Polypodiopsida", "type": "Perennial", "growingMonths": [4, 5, 6, 7, 8, 9, 10, 11] },
+    { "parent": "Cactus", "variety": "Cactaceae", "type": "Succulent", "growingMonths": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] },
+    { "parent": "Cucumber", "variety": "Cucumis sativus", "type": "Vegetable", "growingMonths": [6, 7, 8, 9] },
+    { "parent": "Sunflower", "variety": "Helianthus annuus", "type": "Flower", "growingMonths": [6, 7, 8, 9] },
+    { "parent": "Cilantro", "variety": "Coriandrum sativum", "type": "Herb", "growingMonths": [3, 4, 5, 6, 7, 8, 9] },
+    { "parent": "Oak Tree", "variety": "Quercus", "type": "Tree", "growingMonths": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] },
+    { "parent": "Carrot", "variety": "Daucus carota", "type": "Vegetable", "growingMonths": [3, 4, 5, 6, 7, 8, 9, 10] },
+    { "parent": "Tulip", "variety": "Tulipa", "type": "Flower", "growingMonths": [3, 4, 5] },
+    { "parent": "Rosemary", "variety": "Salvia rosmarinus", "type": "Herb", "growingMonths": [4, 5, 6, 7, 8, 9, 10] }
+  ]
+}
