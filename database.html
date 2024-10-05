@@ -27,6 +27,9 @@
             background-color: #28a745;
             color: white;
         }
+        .growing-season-column {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -37,7 +40,7 @@
         <div class="row mb-4">
             <div class="col-md-12">
                 <form class="row g-3" id="searchForm">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <input type="text" class="form-control" id="searchInput" placeholder="Search plants...">
                     </div>
                     <div class="col-md-3">
@@ -61,9 +64,6 @@
                             <option value="Perennial">Perennial</option>
                         </select>
                     </div>
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-primary w-100">Search</button>
-                    </div>
                 </form>
             </div>
         </div>
@@ -74,7 +74,7 @@
                     <th>Parent</th>
                     <th>Variety</th>
                     <th>Type</th>
-                    <th>Growing Season</th>
+                    <th class="growing-season-column">Growing Season</th>
                 </tr>
             </thead>
             <tbody id="plantTableBody">
@@ -124,7 +124,7 @@
                     <td>${plant.parent}</td>
                     <td>${plant.variety}</td>
                     <td>${plant.type}</td>
-                    <td>${createGrowingSeasonVisual(plant.growingMonths)}</td>
+                    <td class="growing-season-column">${createGrowingSeasonVisual(plant.growingMonths)}</td>
                 `;
                 tableBody.appendChild(row);
             });
@@ -138,7 +138,11 @@
             const filteredPlants = plants.filter(plant => {
                 const matchesSearch = plant.parent.toLowerCase().includes(searchTerm) ||
                                       plant.variety.toLowerCase().includes(searchTerm) ||
-                                      plant.type.toLowerCase().includes(searchTerm);
+                                      plant.type.toLowerCase().includes(searchTerm) ||
+                                      months.some((month, index) => 
+                                          month.toLowerCase().includes(searchTerm) && 
+                                          plant.growingMonths.includes(index + 1)
+                                      );
                 
                 const matchesType = selectedType === '' || plant.type === selectedType;
                 
@@ -162,10 +166,6 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             populateTable(plants);
-            document.getElementById('searchForm').addEventListener('submit', (e) => {
-                e.preventDefault();
-                filterPlants();
-            });
             document.getElementById('searchInput').addEventListener('input', filterPlants);
             document.getElementById('seasonSelect').addEventListener('change', filterPlants);
             document.getElementById('typeSelect').addEventListener('change', filterPlants);
