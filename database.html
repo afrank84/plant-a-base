@@ -16,15 +16,16 @@
             width: 30px;
             height: 30px;
             border: 1px solid #ccc;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             margin: 1px;
+            font-size: 0.7em;
+            color: #333;
         }
         .growing-month {
             background-color: #28a745;
-        }
-        .month-label {
-            font-size: 0.7em;
-            text-align: center;
+            color: white;
         }
     </style>
 </head>
@@ -74,7 +75,6 @@
                     <th>Variety</th>
                     <th>Type</th>
                     <th>Growing Season</th>
-                    <th>More Info</th>
                 </tr>
             </thead>
             <tbody id="plantTableBody">
@@ -109,11 +109,7 @@
             let html = '<div>';
             months.forEach((month, index) => {
                 const isGrowing = growingMonths.includes(index + 1);
-                html += `<div class="month-box ${isGrowing ? 'growing-month' : ''}" title="${month}"></div>`;
-            });
-            html += '</div><div>';
-            months.forEach(month => {
-                html += `<div class="month-label">${month}</div>`;
+                html += `<div class="month-box ${isGrowing ? 'growing-month' : ''}" title="${month}">${month}</div>`;
             });
             html += '</div>';
             return html;
@@ -128,7 +124,6 @@
                     <td>${plant.variety}</td>
                     <td>${plant.type}</td>
                     <td>${createGrowingSeasonVisual(plant.growingMonths)}</td>
-                    <td><a href="template.html" class="btn btn-sm btn-primary">View</a></td>
                 `;
                 tableBody.appendChild(row);
             });
