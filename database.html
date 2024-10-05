@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Database - Plant-a-base</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><i class="fas fa-leaf me-2"></i>Plant-a-base</a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="index.html">Home</a>
+                <a class="nav-link active" aria-current="page" href="database.html">Database</a>
+                <a class="nav-link" href="template.html">Template</a>
+                <a class="nav-link" href="contact.html">Contact</a>
+            </div>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search plants..." aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Plant Database</h1>
+        
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <form class="row g-3">
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" placeholder="Search plants...">
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" aria-label="Select month">
+                            <option selected>Select month</option>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" aria-label="Select growing zone">
+                            <option selected>Select growing zone</option>
+                            <option value="1">Zone 1</option>
+                            <option value="2">Zone 2</option>
+                            <option value="3">Zone 3</option>
+                            <option value="4">Zone 4</option>
+                            <option value="5">Zone 5</option>
+                            <option value="6">Zone 6</option>
+                            <option value="7">Zone 7</option>
+                            <option value="8">Zone 8</option>
+                            <option value="9">Zone 9</option>
+                            <option value="10">Zone 10</option>
+                            <option value="11">Zone 11</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary w-100">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Plant Name</th>
+                    <th>Scientific Name</th>
+                    <th>Type</th>
+                    <th>Hardiness Zone</th>
+                    <th>Sun Exposure</th>
+                    <th>Water Needs</th>
+                    <th>More Info</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Tomato</td>
+                    <td>Solanum lycopersicum</td>
+                    <td>Vegetable</td>
+                    <td>3-11</td>
+                    <td>Full Sun</td>
+                    <td>Moderate</td>
+                    <td><a href="template.html" class="btn btn-sm btn-primary">View</a></td>
+                </tr>
+                <tr>
+                    <td>Lavender</td>
+                    <td>Lavandula</td>
+                    <td>Herb</td>
+                    <td>5-9</td>
+                    <td>Full Sun</td>
+                    <td>Low</td>
+                    <td><a href="template.html" class="btn btn-sm btn-primary">View</a></td>
+                </tr>
+                <tr>
+                    <td>Aloe Vera</td>
+                    <td>Aloe barbadensis miller</td>
+                    <td>Succulent</td>
+                    <td>8-11</td>
+                    <td>Partial Sun</td>
+                    <td>Low</td>
+                    <td><a href="template.html" class="btn btn-sm btn-primary">View</a></td>
+                </tr>
+                <tr>
+                    <td>Maple Tree</td>
+                    <td>Acer</td>
+                    <td>Tree</td>
+                    <td>3-9</td>
+                    <td>Full Sun to Partial Shade</td>
+                    <td>Moderate</td>
+                    <td><a href="template.html" class="btn btn-sm btn-primary">View</a></td>
+                </tr>
+                <tr>
+                    <td>Rose</td>
+                    <td>Rosa</td>
+                    <td>Flower</td>
+                    <td>4-9</td>
+                    <td>Full Sun</td>
+                    <td>Moderate</td>
+                    <td><a href="template.html" class="btn btn-sm btn-primary">View</a></td>
+                </tr>
+                <tr>
+                    <td>Basil</td>
+                    <td>Ocimum basilicum</td>
+                    <td>Herb</td>
+                    <td>4-10</td>
+                    <td>Full Sun</td>
+                    <td>Moderate</td>
+                    <td><a href="template.html" class="btn btn-sm btn-primary">View</a></td>
+                </tr>
+                <tr>
+                    <td>Fern</td>
+                    <td>Polypodiopsida</td>
+                    <td>Perennial</td>
+                    <td>3-8</td>
+                    <td>Shade to Partial Sun</td>
+                    <td>High</td>
+                    <td><a href="template.html" class="btn btn-sm btn-primary">View</a></td>
+                </tr>
+                <tr>
+                    <td>Cactus</td>
+                    <td>Cactaceae</td>
+                    <td>Succulent</td>
+                    <td>9-11</td>
+                    <td>Full Sun</td>
+                    <td>Very Low</td>
+                    <td><a href="template.html" class="btn btn-sm btn-primary">View</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="text-muted text-center">&copy; 2024 Plant-a-base. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
