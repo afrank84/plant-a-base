@@ -12,6 +12,20 @@
             padding: 20px 0;
             margin-top: 40px;
         }
+        .month-box {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            margin: 1px;
+        }
+        .growing-month {
+            background-color: #28a745;
+        }
+        .month-label {
+            font-size: 0.7em;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -26,36 +40,24 @@
                         <input type="text" class="form-control" placeholder="Search plants...">
                     </div>
                     <div class="col-md-3">
-                        <select class="form-select" aria-label="Select month">
-                            <option selected>Select month</option>
-                            <option value="1">January</option>
-                            <option value="2">February</option>
-                            <option value="3">March</option>
-                            <option value="4">April</option>
-                            <option value="5">May</option>
-                            <option value="6">June</option>
-                            <option value="7">July</option>
-                            <option value="8">August</option>
-                            <option value="9">September</option>
-                            <option value="10">October</option>
-                            <option value="11">November</option>
-                            <option value="12">December</option>
+                        <select class="form-select" aria-label="Select growing season">
+                            <option selected>Select growing season</option>
+                            <option value="spring">Spring</option>
+                            <option value="summer">Summer</option>
+                            <option value="fall">Fall</option>
+                            <option value="winter">Winter</option>
+                            <option value="year-round">Year-round</option>
                         </select>
                     </div>
                     <div class="col-md-3">
-                        <select class="form-select" aria-label="Select growing zone">
-                            <option selected>Select growing zone</option>
-                            <option value="1">Zone 1</option>
-                            <option value="2">Zone 2</option>
-                            <option value="3">Zone 3</option>
-                            <option value="4">Zone 4</option>
-                            <option value="5">Zone 5</option>
-                            <option value="6">Zone 6</option>
-                            <option value="7">Zone 7</option>
-                            <option value="8">Zone 8</option>
-                            <option value="9">Zone 9</option>
-                            <option value="10">Zone 10</option>
-                            <option value="11">Zone 11</option>
+                        <select class="form-select" aria-label="Select plant type">
+                            <option selected>Select plant type</option>
+                            <option value="vegetable">Vegetable</option>
+                            <option value="herb">Herb</option>
+                            <option value="flower">Flower</option>
+                            <option value="tree">Tree</option>
+                            <option value="succulent">Succulent</option>
+                            <option value="perennial">Perennial</option>
                         </select>
                     </div>
                     <div class="col-md-2">
@@ -71,76 +73,12 @@
                     <th>Parent</th>
                     <th>Variety</th>
                     <th>Type</th>
-                    <th>Hardiness Zone</th>
                     <th>Growing Season</th>
                     <th>More Info</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>Tomato</td>
-                    <td>Solanum lycopersicum</td>
-                    <td>Vegetable</td>
-                    <td>3-11</td>
-                    <td>May-October</td>
-                    <td><a href="template.html" class="btn btn-sm btn-primary">View</a></td>
-                </tr>
-                <tr>
-                    <td>Lavender</td>
-                    <td>Lavandula</td>
-                    <td>Herb</td>
-                    <td>5-9</td>
-                    <td>June-August</td>
-                    <td><a href="template.html" class="btn btn-sm btn-primary">View</a></td>
-                </tr>
-                <tr>
-                    <td>Aloe Vera</td>
-                    <td>Aloe barbadensis miller</td>
-                    <td>Succulent</td>
-                    <td>8-11</td>
-                    <td>Year-round</td>
-                    <td><a href="template.html" class="btn btn-sm btn-primary">View</a></td>
-                </tr>
-                <tr>
-                    <td>Maple Tree</td>
-                    <td>Acer</td>
-                    <td>Tree</td>
-                    <td>3-9</td>
-                    <td>Year-round</td>
-                    <td><a href="template.html" class="btn btn-sm btn-primary">View</a></td>
-                </tr>
-                <tr>
-                    <td>Rose</td>
-                    <td>Rosa</td>
-                    <td>Flower</td>
-                    <td>4-9</td>
-                    <td>May-November</td>
-                    <td><a href="template.html" class="btn btn-sm btn-primary">View</a></td>
-                </tr>
-                <tr>
-                    <td>Basil</td>
-                    <td>Ocimum basilicum</td>
-                    <td>Herb</td>
-                    <td>4-10</td>
-                    <td>June-September</td>
-                    <td><a href="template.html" class="btn btn-sm btn-primary">View</a></td>
-                </tr>
-                <tr>
-                    <td>Fern</td>
-                    <td>Polypodiopsida</td>
-                    <td>Perennial</td>
-                    <td>3-8</td>
-                    <td>April-November</td>
-                    <td><a href="template.html" class="btn btn-sm btn-primary">View</a></td>
-                </tr>
-                <tr>
-                    <td>Cactus</td>
-                    <td>Cactaceae</td>
-                    <td>Succulent</td>
-                    <td>9-11</td>
-                    <td>Year-round</td>
-                    <td><a href="template.html" class="btn btn-sm btn-primary">View</a></td>
-                </tr>
+            <tbody id="plantTableBody">
+                <!-- Table rows will be inserted here by JavaScript -->
             </tbody>
         </table>
     </div>
@@ -153,5 +91,50 @@
 
     <script src="js/menu.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const plants = [
+            { parent: 'Tomato', variety: 'Solanum lycopersicum', type: 'Vegetable', growingMonths: [5, 6, 7, 8, 9, 10] },
+            { parent: 'Lavender', variety: 'Lavandula', type: 'Herb', growingMonths: [6, 7, 8] },
+            { parent: 'Aloe Vera', variety: 'Aloe barbadensis miller', type: 'Succulent', growingMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] },
+            { parent: 'Maple Tree', variety: 'Acer', type: 'Tree', growingMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] },
+            { parent: 'Rose', variety: 'Rosa', type: 'Flower', growingMonths: [5, 6, 7, 8, 9, 10, 11] },
+            { parent: 'Basil', variety: 'Ocimum basilicum', type: 'Herb', growingMonths: [6, 7, 8, 9] },
+            { parent: 'Fern', variety: 'Polypodiopsida', type: 'Perennial', growingMonths: [4, 5, 6, 7, 8, 9, 10, 11] },
+            { parent: 'Cactus', variety: 'Cactaceae', type: 'Succulent', growingMonths: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] }
+        ];
+
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        function createGrowingSeasonVisual(growingMonths) {
+            let html = '<div>';
+            months.forEach((month, index) => {
+                const isGrowing = growingMonths.includes(index + 1);
+                html += `<div class="month-box ${isGrowing ? 'growing-month' : ''}" title="${month}"></div>`;
+            });
+            html += '</div><div>';
+            months.forEach(month => {
+                html += `<div class="month-label">${month}</div>`;
+            });
+            html += '</div>';
+            return html;
+        }
+
+        function populateTable() {
+            const tableBody = document.getElementById('plantTableBody');
+            plants.forEach(plant => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${plant.parent}</td>
+                    <td>${plant.variety}</td>
+                    <td>${plant.type}</td>
+                    <td>${createGrowingSeasonVisual(plant.growingMonths)}</td>
+                    <td><a href="template.html" class="btn btn-sm btn-primary">View</a></td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', populateTable);
+    </script>
 </body>
 </html>
