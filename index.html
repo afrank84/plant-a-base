@@ -6,7 +6,6 @@
     <title>Welcome to Plant-a-base</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <style>
         .feature-icon {
             font-size: 2rem;
@@ -21,6 +20,11 @@
             background-color: #e9ecef;
             padding: 40px 0;
             margin-top: 40px;
+        }
+        #captcha-container {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -81,7 +85,7 @@
         </div>
     </div>
 
-    <!-- Sign-up Section with CAPTCHA -->
+    <!-- Sign-up Section with Custom CAPTCHA -->
     <section class="signup-section">
         <div class="container">
             <div class="row">
@@ -92,7 +96,10 @@
                         <div class="input-group mb-3">
                             <input type="email" class="form-control" placeholder="Enter your email address" aria-label="Email address" aria-describedby="button-signup" required>
                         </div>
-                        <div class="g-recaptcha mb-3" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
+                        <div id="captcha-container" class="mb-2"></div>
+                        <div class="input-group mb-3">
+                            <input type="number" id="captcha-answer" class="form-control" placeholder="Enter the answer" required>
+                        </div>
                         <button class="btn btn-primary" type="submit" id="button-signup">Sign Up</button>
                         <p id="signup-message" class="mt-3"></p>
                     </form>
@@ -111,23 +118,34 @@
     <script src="https://kit.fontawesome.com/c2e74e567e.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
+        let captchaAnswer;
+
+        function generateCaptcha() {
+            const num1 = Math.floor(Math.random() * 10) + 1;
+            const num2 = Math.floor(Math.random() * 10) + 1;
+            captchaAnswer = num1 + num2;
+            document.getElementById('captcha-container').textContent = `What is ${num1} + ${num2}?`;
+        }
+
+        generateCaptcha();
+
         document.getElementById('signup-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            var email = this.querySelector('input[type="email"]').value;
-            var captchaResponse = grecaptcha.getResponse();
+            const email = this.querySelector('input[type="email"]').value;
+            const userAnswer = parseInt(document.getElementById('captcha-answer').value, 10);
             
-            if (!captchaResponse) {
-                document.getElementById('signup-message').textContent = 'Please complete the CAPTCHA.';
+            if (userAnswer !== captchaAnswer) {
+                document.getElementById('signup-message').textContent = 'Incorrect CAPTCHA answer. Please try again.';
+                generateCaptcha();
                 return;
             }
 
-            // Here you would typically send the email and captchaResponse to your server
+            // Here you would typically send the email to your server
             console.log('Email submitted:', email);
-            console.log('CAPTCHA response:', captchaResponse);
             
             document.getElementById('signup-message').textContent = 'Thank you for signing up! We\'ll keep you updated.';
             this.reset();
-            grecaptcha.reset();
+            generateCaptcha();
         });
     </script>
 </body>
