@@ -4,49 +4,49 @@
       "parent": "Allamanda schottii Pohl",
       "variety": "",
       "type": "Flower",
-      "growingMonths": []
+      "growingMonths": [3, 4, 5, 6, 7, 8, 9, 10]
     },
     {
       "parent": "Amaranth",
       "variety": "Burgundy Organic Amarath",
       "type": "Vegetable",
-      "growingMonths": []
+      "growingMonths": [4, 5, 6, 7, 8, 9]
     },
     {
       "parent": "Amaranth",
       "variety": "Hopi Red Dye Organic",
       "type": "Vegetable",
-      "growingMonths": []
+      "growingMonths": [4, 5, 6, 7, 8, 9]
     },
     {
       "parent": "Amaranth",
       "variety": "Red Leaf Amaranth",
       "type": "Vegetable",
-      "growingMonths": []
+      "growingMonths": [4, 5, 6, 7, 8, 9]
     },
     {
       "parent": "Apple",
       "variety": "ANNONA GLABRA",
       "type": "Tree",
-      "growingMonths": []
+      "growingMonths": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     },
     {
       "parent": "Apple",
       "variety": "Dorsett Golden",
       "type": "Tree",
-      "growingMonths": []
+      "growingMonths": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     },
     {
       "parent": "Apple",
       "variety": "Anna",
       "type": "Tree",
-      "growingMonths": []
+      "growingMonths": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     },
     {
       "parent": "Basil",
       "variety": "Compact",
       "type": "Herb",
-      "growingMonths": []
+      "growingMonths": [4, 5, 6, 7, 8, 9, 10]
     },
     {
       "parent": "Basil",
@@ -130,7 +130,7 @@
       "parent": "Bean",
       "variety": "Yard Long",
       "type": "Vegetable",
-      "growingMonths": []
+      "growingMonths": [4, 5, 6, 7, 8, 9]
     },
     {
       "parent": "Bean",
@@ -148,31 +148,31 @@
       "parent": "Beet",
       "variety": "Detroit Dark Red",
       "type": "Vegetable",
-      "growingMonths": [9, 10, 11, 12, 1, 2]
+      "growingMonths": [1, 2, 3, 4, 5, 10, 11, 12]
     },
     {
       "parent": "Blueberry",
       "variety": "Tom West Blueberries",
       "type": "Fruit",
-      "growingMonths": []
+      "growingMonths": [1, 2, 3, 4, 5, 10, 11, 12]
     },
     {
       "parent": "Broad Bean",
       "variety": "Windsor",
       "type": "Vegetable",
-      "growingMonths": []
+      "growingMonths": [10, 11, 12, 1, 2, 3]
     },
     {
       "parent": "Broccoli",
       "variety": "Blue Wind",
       "type": "Vegetable",
-      "growingMonths": []
+      "growingMonths": [9, 10, 11, 12, 1, 2]
     },
     {
       "parent": "Broccoli",
       "variety": "Raab",
       "type": "Vegetable",
-      "growingMonths": []
+      "growingMonths": [9, 10, 11, 12, 1, 2, 3]
     },
     {
       "parent": "Broccoli",
@@ -202,7 +202,7 @@
       "parent": "Broccoli",
       "variety": "Romanesco",
       "type": "Vegetable",
-      "growingMonths": []
+      "growingMonths": [9, 10, 11, 12, 1, 2]
     },
     {
       "parent": "Broccoli",
@@ -232,19 +232,19 @@
       "parent": "Brussel Sprouts",
       "variety": "Catskill",
       "type": "Vegetable",
-      "growingMonths": []
+      "growingMonths": [9, 10, 11, 12, 1, 2]
     },
     {
       "parent": "Cabbage",
       "variety": "Golden Acre",
       "type": "Vegetable",
-      "growingMonths": []
+      "growingMonths": [9, 10, 11, 12, 1, 2]
     },
     {
       "parent": "Cabbage",
       "variety": "Ruby Bale",
       "type": "Vegetable",
-      "growingMonths": []
+      "growingMonths": [9, 10, 11, 12, 1, 2]
     },
     {
       "parent": "Cabbage",
@@ -280,7 +280,7 @@
       "parent": "Chard",
       "variety": "Swiss",
       "type": "Vegetable",
-      "growingMonths": []
+      "growingMonths": [10, 11, 12, 1, 2, 3]
     },
     {
       "parent": "Chayote",
@@ -310,31 +310,31 @@
       "parent": "Cilantro",
       "variety": "Calypso",
       "type": "Herb",
-      "growingMonths": []
+      "growingMonths": [10, 11, 12, 1, 2, 3]
     },
     {
       "parent": "Coffee",
       "variety": "Arabica",
       "type": "Tree",
-      "growingMonths": []
+      "growingMonths": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     },
     {
       "parent": "Collards",
       "variety": "Georgia Southern",
       "type": "Vegetable",
-      "growingMonths": []
+      "growingMonths": [9, 10, 11, 12, 1, 2, 3, 4]
     },
     {
       "parent": "Collards",
       "variety": "Collards Vate",
       "type": "Vegetable",
-      "growingMonths": []
+      "growingMonths": [9, 10, 11, 12, 1, 2, 3, 4]
     },
     {
       "parent": "Collards",
       "variety": "Flash",
       "type": "Vegetable",
-      "growingMonths": []
+      "growingMonths": [9, 10, 11, 12, 1, 2, 3, 4]
     },
     {
       "parent": "Corn",
@@ -358,19 +358,19 @@
       "parent": "Cucumber",
       "variety": "Spacemaster",
       "type": "Vegetable",
-      "growingMonths": []
+      "growingMonths": [3, 4, 5, 6, 9, 10]
     },
     {
       "parent": "Cucumber",
       "variety": "Bush Slicer",
       "type": "Vegetable",
-      "growingMonths": []
+      "growingMonths": [3, 4, 5, 6, 9, 10]
     },
     {
       "parent": "Cucumber",
       "variety": "Ashley Cucumber",
       "type": "Vegetable",
-      "growingMonths": []
+      "growingMonths": [3, 4, 5, 6, 9]
     },
     {
       "parent": "Cucumber",
@@ -388,31 +388,31 @@
       "parent": "Cucumber",
       "variety": "Tendergreen Cucumber",
       "type": "Vegetable",
-      "growingMonths": []
+      "growingMonths": [3, 4, 5, 6, 9, 10]
     },
     {
       "parent": "Cucumber",
       "variety": "Green Fingers Persian",
       "type": "Vegetable",
-      "growingMonths": []
+      "growingMonths": [3, 4, 5, 6, 9, 10]
     },
     {
       "parent": "Cucumber",
       "variety": "Chelsea Prize",
       "type": "Vegetable",
-      "growingMonths": []
+      "growingMonths": [3, 4, 5, 6, 9, 10]
     },
     {
       "parent": "Cucumber",
       "variety": "Chinese Snake",
       "type": "Vegetable",
-      "growingMonths": []
+      "growingMonths": [3, 4, 5, 9, 10]
     },
     {
       "parent": "Cucumber",
       "variety": "Homemade Pickles",
       "type": "Vegetable",
-      "growingMonths": []
+      "growingMonths": [3, 4, 5, 9, 10]
     },
     {
       "parent": "Cucumber",
@@ -424,7 +424,7 @@
       "parent": "Cucumber",
       "variety": "Wautoma",
       "type": "Vegetable",
-      "growingMonths": []
+      "growingMonths": [3, 4, 5, 9, 10]
     },
     {
       "parent": "Cucumber",
@@ -436,7 +436,7 @@
       "parent": "Cucumber",
       "variety": "Sweet Armenian Cucumber",
       "type": "Vegetable",
-      "growingMonths": []
+      "growingMonths": [3, 4, 5, 9, 10]
     },
     {
       "parent": "Cucumber",
