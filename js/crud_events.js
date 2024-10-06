@@ -1,7 +1,7 @@
  // Plant Records Table Functionality
         document.getElementById('add-row').addEventListener('click', function() {
             const table = document.getElementById('plant-records-table').getElementsByTagName('tbody')[0];
-            const newRow = table.insertRow(table.rows.length);
+            const newRow = table.insertRow(0);
             const cells = [];
             
             for (let i = 0; i < 5; i++) {
