@@ -18,6 +18,9 @@ function createMenu() {
                             <a class="nav-link" href="template.html">Template</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="dashboard.html">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="contact.html">Contact</a>
                         </li>
                     </ul>
