@@ -21,10 +21,14 @@ function createMenu() {
                             <a class="nav-link" href="contact.html">Contact</a>
                         </li>
                     </ul>
-                    <form class="d-flex">
+                    <form class="d-flex me-3">
                         <input class="form-control me-2" type="search" placeholder="Search plants..." aria-label="Search">
                         <button class="btn btn-success" type="submit">Search</button>
                     </form>
+                    <div class="d-flex align-items-center">
+                        <a class="btn btn-outline-light me-2" href="login.html"><i class="fas fa-sign-in-alt me-1"></i>Login</a>
+                        <a class="btn btn-outline-light" href="signup.html"><i class="fas fa-user-plus me-1"></i>Sign Up</a>
+                    </div>
                 </div>
             </div>
         </nav>
