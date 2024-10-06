@@ -13,18 +13,18 @@ function createFooter() {
             <div class="col-md-6">
                 <ul class="list-inline text-md-end mb-0">
                     <li class="list-inline-item">
-                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                            <i class="fab fa-facebook fa-lg"></i>
-                        </a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                            <i class="fab fa-twitter fa-lg"></i>
-                        </a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                        <a href="https://www.instagram.com/afrank84" target="_blank" rel="noopener noreferrer">
                             <i class="fab fa-instagram fa-lg"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="https://github.com/afrank84" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-github fa-lg"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="https://x.com/afrank84" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-x-twitter fa-lg"></i>
                         </a>
                     </li>
                 </ul>
