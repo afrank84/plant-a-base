@@ -53,6 +53,14 @@ function createMenu() {
             link.classList.add('active');
             link.setAttribute('aria-current', 'page');
         }
+
+        // Add hover effect to menu items
+        link.addEventListener('mouseover', () => {
+            link.classList.add('text-success');
+        });
+        link.addEventListener('mouseout', () => {
+            link.classList.remove('text-success');
+        });
     });
 }
 
