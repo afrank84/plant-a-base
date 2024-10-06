@@ -1,19 +1,454 @@
 {
   "plants": [
-    { "parent": "Tomato", "variety": "Solanum lycopersicum", "type": "Vegetable", "growingMonths": [5, 6, 7, 8, 9, 10] },
-    { "parent": "Lavender", "variety": "Lavandula", "type": "Herb", "growingMonths": [6, 7, 8] },
-    { "parent": "Aloe Vera", "variety": "Aloe barbadensis miller", "type": "Succulent", "growingMonths": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] },
-    { "parent": "Maple Tree", "variety": "Acer", "type": "Tree", "growingMonths": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] },
-    { "parent": "Rose", "variety": "Rosa", "type": "Flower", "growingMonths": [5, 6, 7, 8, 9, 10, 11] },
-    { "parent": "Basil", "variety": "Ocimum basilicum", "type": "Herb", "growingMonths": [6, 7, 8, 9] },
-    { "parent": "Fern", "variety": "Polypodiopsida", "type": "Perennial", "growingMonths": [4, 5, 6, 7, 8, 9, 10, 11] },
-    { "parent": "Cactus", "variety": "Cactaceae", "type": "Succulent", "growingMonths": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] },
-    { "parent": "Cucumber", "variety": "Cucumis sativus", "type": "Vegetable", "growingMonths": [6, 7, 8, 9] },
-    { "parent": "Sunflower", "variety": "Helianthus annuus", "type": "Flower", "growingMonths": [6, 7, 8, 9] },
-    { "parent": "Cilantro", "variety": "Coriandrum sativum", "type": "Herb", "growingMonths": [3, 4, 5, 6, 7, 8, 9] },
-    { "parent": "Oak Tree", "variety": "Quercus", "type": "Tree", "growingMonths": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] },
-    { "parent": "Carrot", "variety": "Daucus carota", "type": "Vegetable", "growingMonths": [3, 4, 5, 6, 7, 8, 9, 10] },
-    { "parent": "Tulip", "variety": "Tulipa", "type": "Flower", "growingMonths": [3, 4, 5] },
-    { "parent": "Rosemary", "variety": "Salvia rosmarinus", "type": "Herb", "growingMonths": [4, 5, 6, 7, 8, 9, 10] }
+    {
+      "parent": "Allamanda schottii Pohl",
+      "variety": "",
+      "type": "Flower",
+      "growingMonths": []
+    },
+    {
+      "parent": "Amaranth",
+      "variety": "Burgundy Organic Amarath",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Amaranth",
+      "variety": "Hopi Red Dye Organic",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Amaranth",
+      "variety": "Red Leaf Amaranth",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Apple",
+      "variety": "ANNONA GLABRA",
+      "type": "Tree",
+      "growingMonths": []
+    },
+    {
+      "parent": "Apple",
+      "variety": "Dorsett Golden",
+      "type": "Tree",
+      "growingMonths": []
+    },
+    {
+      "parent": "Apple",
+      "variety": "Anna",
+      "type": "Tree",
+      "growingMonths": []
+    },
+    {
+      "parent": "Basil",
+      "variety": "Compact",
+      "type": "Herb",
+      "growingMonths": []
+    },
+    {
+      "parent": "Basil",
+      "variety": "Sweet Basil",
+      "type": "Herb",
+      "growingMonths": [9, 10, 11, 12, 1, 2]
+    },
+    {
+      "parent": "Bean",
+      "variety": "Cow Pea Black Eye Peas",
+      "type": "Vegetable",
+      "growingMonths": [3, 9]
+    },
+    {
+      "parent": "Bean",
+      "variety": "Romano Italian Pole Bean",
+      "type": "Vegetable",
+      "growingMonths": [3, 9]
+    },
+    {
+      "parent": "Bean",
+      "variety": "Royal Burgundy",
+      "type": "Vegetable",
+      "growingMonths": [3, 4, 5, 6, 7, 8]
+    },
+    {
+      "parent": "Bean",
+      "variety": "Garden Bean Cherokee Wax ( Yellow Bush )",
+      "type": "Vegetable",
+      "growingMonths": [9, 10, 11, 12, 1, 2]
+    },
+    {
+      "parent": "Bean",
+      "variety": "Pinto",
+      "type": "Vegetable",
+      "growingMonths": [3, 9]
+    },
+    {
+      "parent": "Bean",
+      "variety": "Garden Bean Black Turtle",
+      "type": "Vegetable",
+      "growingMonths": [3, 9]
+    },
+    {
+      "parent": "Bean",
+      "variety": "Lima",
+      "type": "Vegetable",
+      "growingMonths": [3, 9]
+    },
+    {
+      "parent": "Bean",
+      "variety": "French Filet",
+      "type": "Vegetable",
+      "growingMonths": [3, 9]
+    },
+    {
+      "parent": "Bean",
+      "variety": "Navy Bean",
+      "type": "Vegetable",
+      "growingMonths": [3, 4, 5, 6, 7, 8, 2, 10, 11]
+    },
+    {
+      "parent": "Bean",
+      "variety": "Great Northern Bean",
+      "type": "Vegetable",
+      "growingMonths": [3, 4, 5, 6, 7, 8, 9, 10, 11]
+    },
+    {
+      "parent": "Bean",
+      "variety": "Blue Lake Bush 274",
+      "type": "Vegetable",
+      "growingMonths": [3, 4, 5, 6, 7, 8]
+    },
+    {
+      "parent": "Bean",
+      "variety": "Zipper Peas",
+      "type": "Vegetable",
+      "growingMonths": [4, 5, 6, 7, 8]
+    },
+    {
+      "parent": "Bean",
+      "variety": "Yard Long",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Bean",
+      "variety": "Slenderwax",
+      "type": "Vegetable",
+      "growingMonths": [3, 4, 5, 8, 9]
+    },
+    {
+      "parent": "Bean",
+      "variety": "Cow Pea Pinkeye Purple Hull",
+      "type": "Vegetable",
+      "growingMonths": [4, 5, 6, 9, 10]
+    },
+    {
+      "parent": "Beet",
+      "variety": "Detroit Dark Red",
+      "type": "Vegetable",
+      "growingMonths": [9, 10, 11, 12, 1, 2]
+    },
+    {
+      "parent": "Blueberry",
+      "variety": "Tom West Blueberries",
+      "type": "Fruit",
+      "growingMonths": []
+    },
+    {
+      "parent": "Broad Bean",
+      "variety": "Windsor",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Broccoli",
+      "variety": "Blue Wind",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Broccoli",
+      "variety": "Raab",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Broccoli",
+      "variety": "Green Sprouting",
+      "type": "Vegetable",
+      "growingMonths": [12]
+    },
+    {
+      "parent": "Broccoli",
+      "variety": "Calabrese",
+      "type": "Vegetable",
+      "growingMonths": [9, 10, 11, 12, 1, 2]
+    },
+    {
+      "parent": "Broccoli",
+      "variety": "Raab Rapini",
+      "type": "Vegetable",
+      "growingMonths": [1, 2, 3, 4, 8, 9, 10]
+    },
+    {
+      "parent": "Broccoli",
+      "variety": "Waltham 29",
+      "type": "Vegetable",
+      "growingMonths": [7, 8, 9, 10]
+    },
+    {
+      "parent": "Broccoli",
+      "variety": "Romanesco",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Broccoli",
+      "variety": "Green Sprouting Calabrese",
+      "type": "Vegetable",
+      "growingMonths": [7, 8, 9, 10, 11, 12]
+    },
+    {
+      "parent": "Broccoli",
+      "variety": "De Cicco",
+      "type": "Vegetable",
+      "growingMonths": [2, 3, 10, 11]
+    },
+    {
+      "parent": "Brussel Sprouts",
+      "variety": "Long Island Improved",
+      "type": "Vegetable",
+      "growingMonths": [1, 2, 3, 4, 8, 9, 10]
+    },
+    {
+      "parent": "Brussel Sprouts",
+      "variety": "Red Ball",
+      "type": "Vegetable",
+      "growingMonths": [2, 3, 4, 8, 9]
+    },
+    {
+      "parent": "Brussel Sprouts",
+      "variety": "Catskill",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Cabbage",
+      "variety": "Golden Acre",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Cabbage",
+      "variety": "Ruby Bale",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Cabbage",
+      "variety": "Charleston Wakefield",
+      "type": "Vegetable",
+      "growingMonths": [1, 2, 8, 9]
+    },
+    {
+      "parent": "Carrot",
+      "variety": "Touchon",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Carrot",
+      "variety": "Davers Half Long",
+      "type": "Vegetable",
+      "growingMonths": [9, 10, 11, 12, 1, 2]
+    },
+    {
+      "parent": "Carrot",
+      "variety": "Little Finger",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Cauliflower",
+      "variety": "Snowball X",
+      "type": "Vegetable",
+      "growingMonths": [9, 10, 11, 12, 1, 2]
+    },
+    {
+      "parent": "Chard",
+      "variety": "Swiss",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Chayote",
+      "variety": "Mexican",
+      "type": "Vegetable",
+      "growingMonths": [7]
+    },
+    {
+      "parent": "Cherry",
+      "variety": "Barbados (Acerola)",
+      "type": "Fruit",
+      "growingMonths": [3, 4]
+    },
+    {
+      "parent": "Cilantro",
+      "variety": "Coriander",
+      "type": "Herb",
+      "growingMonths": [2, 3, 4, 5, 8, 9]
+    },
+    {
+      "parent": "Cilantro",
+      "variety": "Longstanding",
+      "type": "Herb",
+      "growingMonths": [1, 2, 3]
+    },
+    {
+      "parent": "Cilantro",
+      "variety": "Calypso",
+      "type": "Herb",
+      "growingMonths": []
+    },
+    {
+      "parent": "Coffee",
+      "variety": "Arabica",
+      "type": "Tree",
+      "growingMonths": []
+    },
+    {
+      "parent": "Collards",
+      "variety": "Georgia Southern",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Collards",
+      "variety": "Collards Vate",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Collards",
+      "variety": "Flash",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Corn",
+      "variety": "Sweet Corn Burpee's Triple Crown White Hybrid",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Corn",
+      "variety": "Sweet Corn Stowell's Evergreen",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Corn",
+      "variety": "Sweet Corn Early Golden Bantam",
+      "type": "Vegetable",
+      "growingMonths": [9, 10, 11, 12, 1, 2]
+    },
+    {
+      "parent": "Cucumber",
+      "variety": "Spacemaster",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Cucumber",
+      "variety": "Bush Slicer",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Cucumber",
+      "variety": "Ashley Cucumber",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Cucumber",
+      "variety": "Straight 8 Slicing Cucumber",
+      "type": "Vegetable",
+      "growingMonths": [9, 10, 11, 12, 1, 2]
+    },
+    {
+      "parent": "Cucumber",
+      "variety": "Marketmore 76",
+      "type": "Vegetable",
+      "growingMonths": [9, 10, 11, 12, 1, 2]
+    },
+    {
+      "parent": "Cucumber",
+      "variety": "Tendergreen Cucumber",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Cucumber",
+      "variety": "Green Fingers Persian",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Cucumber",
+      "variety": "Chelsea Prize",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Cucumber",
+      "variety": "Chinese Snake",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Cucumber",
+      "variety": "Homemade Pickles",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Cucumber",
+      "variety": "National Pickling",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Cucumber",
+      "variety": "Wautoma",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Cucumber",
+      "variety": "Lemon Cucumber",
+      "type": "Vegetable",
+      "growingMonths": [4, 5, 8, 9]
+    },
+    {
+      "parent": "Cucumber",
+      "variety": "Sweet Armenian Cucumber",
+      "type": "Vegetable",
+      "growingMonths": []
+    },
+    {
+      "parent": "Cucumber",
+      "variety": "Sumter",
+      "type": "Vegetable",
+      "growingMonths": [2, 3, 4, 5, 6]
+    },
+    {
+      "parent": "Cucumber",
+      "variety": "Muncher",
+      "type": "Vegetable",
+      "growingMonths": [2, 3, 4, 5, 6]
+    }
   ]
 }
