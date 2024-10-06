@@ -13,110 +13,12 @@
             padding: 20px 0;
             margin-top: 40px;
         }
-
-        /* Plant Growing Animation Styles */
-        body {
-            background: linear-gradient(to bottom, #87ceeb, #7ec850);
-        }
-
-        .plant-container {
-            position: relative;
-            width: 50px;
-            height: 200px;
-            margin: 0 auto;
-            animation: grow 5s ease-in-out forwards;
-        }
-
-        .soil {
-            position: absolute;
-            bottom: 0;
-            width: 100px;
-            height: 30px;
-            background: #6b4226;
-            border-radius: 50%;
-            z-index: 1;
-        }
-
-        .stem {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            width: 10px;
-            height: 0;
-            background: #228b22;
-            transform: translateX(-50%);
-            border-radius: 5px;
-            animation: growStem 5s ease-in-out forwards;
-        }
-
-        .leaves {
-            position: absolute;
-            bottom: 100px;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: #2e8b57;
-            z-index: 2;
-            animation: growLeaves 5s ease-in-out forwards;
-        }
-
-        .leaves-left {
-            left: -30px;
-            animation-delay: 2s;
-        }
-
-        .leaves-right {
-            right: -30px;
-            animation-delay: 2s;
-        }
-
-        @keyframes grow {
-            0% {
-                transform: scaleY(0);
-            }
-
-            100% {
-                transform: scaleY(1);
-            }
-        }
-
-        @keyframes growStem {
-            0% {
-                height: 0;
-            }
-
-            100% {
-                height: 140px;
-            }
-        }
-
-        @keyframes growLeaves {
-            0% {
-                width: 0;
-                height: 0;
-            }
-
-            100% {
-                width: 40px;
-                height: 40px;
-            }
-        }
     </style>
 </head>
 
 <body>
     <div id="menu-placeholder"></div>
     <div class="container mt-5">
-        <!-- Plant Animation -->
-        <div class="text-center mb-4">
-            <div class="plant-container">
-                <div class="soil"></div>
-                <div class="stem"></div>
-                <div class="leaves leaves-left"></div>
-                <div class="leaves leaves-right"></div>
-            </div>
-        </div>
-
         <h1 class="text-center mb-5">Login</h1>
 
         <div class="row">
