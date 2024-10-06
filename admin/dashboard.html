@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Plant-a-base</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <style>
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="menu-placeholder"></div>
+    
+    <div class="container mt-5">
+        <h1 class="text-center mb-5">Plant Dashboard</h1>
+        
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Plants Planted</h5>
+                        <div class="chart-container">
+                            <canvas id="plantsPlantedChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Harvest Count</h5>
+                        <div class="chart-container">
+                            <canvas id="harvestCountChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Best Plants by Yield</h5>
+                        <div class="chart-container">
+                            <canvas id="yieldChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Most Popular Plants</h5>
+                        <div class="chart-container">
+                            <canvas id="popularityChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="text-muted text-center">&copy; 2024 Plant-a-base. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/menu.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Dummy data
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+        const plantsPlantedData = [45, 52, 78, 110, 145, 180];
+        const harvestData = [20, 35, 55, 80, 110, 150];
+        const yieldData = {
+            labels: ['Tomatoes', 'Carrots', 'Lettuce', 'Peppers', 'Cucumbers'],
+            data: [500, 350, 450, 280, 400]
+        };
+        const popularityData = {
+            labels: ['Tomatoes', 'Carrots', 'Lettuce', 'Peppers', 'Cucumbers'],
+            data: [30, 20, 25, 15, 10]
+        };
+
+        // Create charts
+        window.onload = function() {
+            createLineChart('plantsPlantedChart', 'Plants Planted', months, plantsPlantedData);
+            createLineChart('harvestCountChart', 'Harvest Count', months, harvestData);
+            createBarChart('yieldChart', 'Yield (kg)', yieldData.labels, yieldData.data);
+            createPieChart('popularityChart', popularityData.labels, popularityData.data);
+        };
+
+        function createLineChart(canvasId, label, labels, data) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: label,
+                        data: data,
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        function createBarChart(canvasId, label, labels, data) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: label,
+                        data: data,
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        function createPieChart(canvasId, labels, data) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.8)',
+                            'rgba(54, 162, 235, 0.8)',
+                            'rgba(255, 206, 86, 0.8)',
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(153, 102, 255, 0.8)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+    </script>
+</body>
+</html>
