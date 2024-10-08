@@ -40,7 +40,7 @@ async function scrapeSheetData(url) {
 }
 
 async function updateTable() {
-    const synologyShareLink = 'http://afrank84.quickconnect.to/d/s/10RFrIMfaMHE8uesoid8WzEHUqBDF4nD/ghMxg59KaUEI5EjWWK59Xz3u2-X_1hJ6-vLdA6b_wugs';
+    const synologyShareLink = 'https://10-0-0-2.afrank84.direct.quickconnect.to:5001/d/s/10RFrIMfaMHE8uesoid8WzEHUqBDF4nD/ghMxg59KaUEI5EjWWK59Xz3u2-X_1hJ6-vLdA6b_wugs';
     const data = await scrapeSheetData(synologyShareLink);
     const tableBody = document.querySelector('#plant-records-table tbody');
     tableBody.innerHTML = ''; // Clear existing rows
