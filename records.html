@@ -13,6 +13,7 @@
             margin-right: 5px;
         }
     </style>
+    <script src="js/synology_data.js" defer></script>
 </head>
 <body>
     <div id="menu-placeholder"></div>
@@ -35,46 +36,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>2024-05-01</td>
-                                    <td>Seed Sowing</td>
-                                    <td>Indoor Tray</td>
-                                    <td>Used organic potting mix</td>
-                                    <td>
-                                        <i class="bi bi-pencil-square text-primary action-btn edit-row"></i>
-                                        <i class="bi bi-trash text-danger action-btn delete-row"></i>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2024-05-15</td>
-                                    <td>Germination</td>
-                                    <td>Indoor Tray</td>
-                                    <td>80% germination rate observed</td>
-                                    <td>
-                                        <i class="bi bi-pencil-square text-primary action-btn edit-row"></i>
-                                        <i class="bi bi-trash text-danger action-btn delete-row"></i>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2024-06-01</td>
-                                    <td>Transplanting</td>
-                                    <td>Garden Bed A</td>
-                                    <td>Transplanted strongest seedlings</td>
-                                    <td>
-                                        <i class="bi bi-pencil-square text-primary action-btn edit-row"></i>
-                                        <i class="bi bi-trash text-danger action-btn delete-row"></i>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2024-07-15</td>
-                                    <td>First Flower</td>
-                                    <td>Garden Bed A</td>
-                                    <td>Multiple flower buds forming</td>
-                                    <td>
-                                        <i class="bi bi-pencil-square text-primary action-btn edit-row"></i>
-                                        <i class="bi bi-trash text-danger action-btn delete-row"></i>
-                                    </td>
-                                </tr>
+                                <!-- Table body will be populated dynamically by JavaScript -->
                             </tbody>
                         </table>
                         <button id="add-row" class="btn btn-success mt-3">Add New Record</button>
@@ -84,7 +46,6 @@
         </div>
     </div>
 
-    <script src="js/crud_events.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/menu.js"></script>
     <script src="js/footer.js"></script>
