@@ -1,7 +1,7 @@
 // github-integration.js
 
 const clientId = 'Ov23liDDoNuULTbbGILk';
-const redirectUri = 'https://your-github-pages-url.com';
+const redirectUri = 'https://plant-a-base.pages.dev/records';
 const scope = 'repo';
 
 let accessToken = null;
