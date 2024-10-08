@@ -1,6 +1,6 @@
 // github-integration.js
 
-const clientId = 'YOUR_GITHUB_OAUTH_APP_CLIENT_ID';
+const clientId = 'Ov23liDDoNuULTbbGILk';
 const redirectUri = 'https://your-github-pages-url.com';
 const scope = 'repo';
 
