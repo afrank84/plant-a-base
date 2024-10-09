@@ -13,7 +13,7 @@ $error_message = '';
 $success_message = '';
 
 // Fetch user data
-$stmt = $pdo->prepare("SELECT username, email, zone FROM Users WHERE user_id = ?");
+$stmt = $pdo->prepare("SELECT username, email, zone, date_joined, profile_picture FROM Users WHERE user_id = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -48,7 +48,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     }
+
+    // Handle profile picture upload
+    if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == 0) {
+        $allowed = ['jpg', 'jpeg', 'png', 'gif'];
+        $filename = $_FILES['profile_picture']['name'];
+        $filetype = pathinfo($filename, PATHINFO_EXTENSION);
+
+        if (!in_array(strtolower($filetype), $allowed)) {
+            $error_message = "Only JPG, JPEG, PNG, and GIF files are allowed.";
+        } else {
+            // Generate a unique filename
+            $new_filename = uniqid() . '.' . $filetype;
+            $upload_path = '../uploads/profile_pictures/' . $new_filename;
+
+            if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $upload_path)) {
+                // Update the database with the new filename
+                $stmt = $pdo->prepare("UPDATE Users SET profile_picture = ? WHERE user_id = ?");
+                if ($stmt->execute([$new_filename, $user_id])) {
+                    $success_message .= " Profile picture updated successfully.";
+                    $user['profile_picture'] = $new_filename;
+                } else {
+                    $error_message = "Failed to update profile picture in the database.";
+                }
+            } else {
+                $error_message = "Failed to upload the profile picture.";
+            }
+        }
+    }
 }
+
+// Determine the profile picture URL
+$profile_picture_url = $user['profile_picture'] 
+    ? "../uploads/profile_pictures/" . htmlspecialchars($user['profile_picture'])
+    : "https://via.placeholder.com/150";
 ?>
 
 <!DOCTYPE html>
@@ -58,6 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
     <?php include '../includes/menu.php'; ?>
@@ -77,31 +111,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         <?php endif; ?>
 
-        <form method="post">
-            <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" value="<?php echo htmlspecialchars($user['username']); ?>" disabled>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <img src="<?php echo $profile_picture_url; ?>" alt="Profile Picture" class="rounded-circle mb-3" width="150" height="150">
+                        <h5 class="card-title"><?php echo htmlspecialchars($user['username']); ?></h5>
+                        <p class="card-text">Member since: <?php echo date('F j, Y', strtotime($user['date_joined'])); ?></p>
+                    </div>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
-            </div>
-            <div class="mb-3">
-                <label for="zone" class="form-label">Zone</label>
-                <select class="form-select" id="zone" name="zone">
-                    <option value="">Select a zone</option>
-                    <?php foreach ($zones as $zone): ?>
-                        <option value="<?php echo htmlspecialchars($zone); ?>" <?php echo $zone === $user['zone'] ? 'selected' : ''; ?>>
-                            <?php echo htmlspecialchars($zone); ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Update Profile</button>
-        </form>
+            <div class="col-md-8">
+                <form method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" value="<?php echo htmlspecialchars($user['username']); ?>" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="zone" class="form-label">Zone</label>
+                        <select class="form-select" id="zone" name="zone">
+                            <option value="">Select a zone</option>
+                            <?php foreach ($zones as $zone): ?>
+                                <option value="<?php echo htmlspecialchars($zone); ?>" <?php echo $zone === $user['zone'] ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($zone); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="profile_picture" class="form-label">Profile Picture</label>
+                        <input type="file" class="form-control" id="profile_picture" name="profile_picture">
+                        <small class="form-text text-muted">Allowed formats: JPG, JPEG, PNG, GIF</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                </form>
 
-        <div class="mt-4">
-            <a href="change_password.php" class="btn btn-secondary">Change Password</a>
+                <div class="mt-4">
+                    <a href="change_password.php" class="btn btn-secondary">Change Password</a>
+                </div>
+            </div>
         </div>
     </div>
 
