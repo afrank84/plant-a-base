@@ -5,6 +5,13 @@ function is_active($page) {
     global $current_page;
     return $current_page === $page ? 'active' : '';
 }
+
+// Construct the profile picture URL
+$default_avatar = '../img/default_profile_picture.png'; // Update this to your default avatar path
+$profile_picture_filename = isset($_SESSION['profile_picture']) ? $_SESSION['profile_picture'] : '';
+$profile_picture_url = $profile_picture_filename 
+    ? "../uploads/profile_pictures/" . $profile_picture_filename 
+    : $default_avatar;
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
     <div class="container-fluid">
@@ -39,9 +46,7 @@ function is_active($page) {
             <div class="d-flex align-items-center">
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <div class="dropdown">
-                        <button class="btn btn-outline-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-user me-1"></i>My Account
-                        </button>
+                        <img src="<?php echo htmlspecialchars($profile_picture_url); ?>" alt="Profile" class="rounded-circle me-2" width="40" height="40" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer; object-fit: cover;">
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                             <li><a class="dropdown-item" href="user_profile.php">Profile</a></li>
                             <li><a class="dropdown-item" href="user_dashboard.php">Dashboard</a></li>
