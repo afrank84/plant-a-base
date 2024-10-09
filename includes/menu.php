@@ -55,7 +55,7 @@ $profile_picture_url = isset($_SESSION['profile_picture']) && !empty($_SESSION['
                     </div>
                 <?php else: ?>
                     <a class="btn btn-outline-light me-2" href="login.php"><i class="fas fa-sign-in-alt me-1"></i>Login</a>
-                    <a class="btn btn-outline-light" href="register.php"><i class="fas fa-user-plus me-1"></i>Sign Up</a>
+                    <a class="btn btn-outline-light" href="register.php"><i class="fas fa-user-plus me-1"></i>Register</a>
                 <?php endif; ?>
             </div>
         </div>
