@@ -1,9 +1,9 @@
 name: Deploy to FTP
 
 on:
-  # push:
-  #   branches:
-  #     - main  # Triggers on push to the main branch
+  push:
+    branches:
+      - main  # Triggers on push to the main branch
   workflow_dispatch:  # Adds manual trigger option
 
 jobs:
