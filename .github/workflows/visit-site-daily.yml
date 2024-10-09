@@ -13,4 +13,4 @@ jobs:
     steps:
       - name: Visit Website
         run: |
-          curl -I http://plant-a-base.free.nf/
+          curl --http1.1 -I https://plant-a-base.free.nf/
