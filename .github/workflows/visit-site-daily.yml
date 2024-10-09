@@ -1,0 +1,16 @@
+name: Auto Visit Website
+
+on:
+  schedule:
+    # Schedule it to run every day
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  visit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Visit Website
+        run: |
+          curl -I http://plant-a-base.free.nf/
