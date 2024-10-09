@@ -5,37 +5,44 @@ $error = '';
 $success = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = trim($_POST['name']);
+    $username = trim($_POST['username']);
     $email = trim($_POST['email']);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm-password'];
 
-    if (empty($name) || empty($email) || empty($password) || empty($confirm_password)) {
+    if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
         $error = "All fields are required.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = "Invalid email format.";
     } elseif ($password !== $confirm_password) {
         $error = "Passwords do not match.";
     } else {
-        $pdo = getConnection();
-        
-        // Check if email already exists
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
-        $stmt->execute([$email]);
-        
-        if ($stmt->rowCount() > 0) {
-            $error = "Email already exists.";
-        } else {
-            // Hash the password
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        try {
+            $pdo = getConnection();
             
-            // Insert new user
-            $stmt = $pdo->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
-            if ($stmt->execute([$name, $email, $hashed_password])) {
-                $success = "Registration successful! You can now log in.";
+            // Check if email or username already exists
+            $stmt = $pdo->prepare("SELECT * FROM Users WHERE email = ? OR username = ?");
+            $stmt->execute([$email, $username]);
+            
+            if ($stmt->rowCount() > 0) {
+                $error = "Email or username already exists.";
             } else {
-                $error = "An error occurred. Please try again.";
+                // Hash the password
+                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                
+                // Insert new user
+                $stmt = $pdo->prepare("INSERT INTO Users (username, email, password_hash) VALUES (?, ?, ?)");
+                if ($stmt->execute([$username, $email, $hashed_password])) {
+                    $userId = $pdo->lastInsertId();
+                    $success = "Registration successful! Your user ID is: " . $userId;
+                } else {
+                    $error = "An error occurred while registering the user.";
+                    error_log("Failed to insert user: " . implode(", ", $stmt->errorInfo()));
+                }
             }
+        } catch (PDOException $e) {
+            $error = "A database error occurred. Please try again later.";
+            error_log("Database error: " . $e->getMessage());
         }
     }
 }
@@ -75,8 +82,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="col-md-6 offset-md-3">
                 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                     <div class="mb-3">
-                        <label for="name" class="form-label">Full Name</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email address</label>
