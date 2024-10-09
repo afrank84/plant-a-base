@@ -27,7 +27,7 @@ $profile_picture_url = isset($_SESSION['profile_picture']) && !empty($_SESSION['
                     <a class="nav-link <?php echo is_active('database.php'); ?>" href="database.php">Database</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo is_active('template.php'); ?>" href="template.php">Template</a>
+                    <a class="nav-link <?php echo is_active('plant.php'); ?>" href="plant.php">Template</a>
                 </li>
                 <?php if (isset($_SESSION['user_id'])): ?>
                 <li class="nav-item">
