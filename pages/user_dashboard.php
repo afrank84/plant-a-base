@@ -1,68 +1,28 @@
 <?php
+// Start the session (if not already started)
 session_start();
+
+// Check if user is logged in, redirect to login page if not
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
-// Include database connection
-require_once 'db_connection.php';
+// Placeholder data for charts (replace with actual data when you have the corresponding tables)
+$plantsPlantedData = [12, 19, 3, 5, 2, 3];
+$harvestCountData = [5, 10, 15, 20, 25, 30];
+$bestPlantsData = [50, 40, 30, 20, 10];
+$popularPlantsData = [30, 25, 20, 15, 10];
 
-// Fetch user-specific data for charts (example queries)
-$user_id = $_SESSION['user_id'];
-
-// Plants Planted Chart Data
-$plants_planted_query = "SELECT MONTH(planting_date) as month, COUNT(*) as count FROM plantings WHERE user_id = ? GROUP BY MONTH(planting_date)";
-$stmt = $conn->prepare($plants_planted_query);
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$plants_planted_result = $stmt->get_result();
-$plants_planted_data = [];
-while ($row = $plants_planted_result->fetch_assoc()) {
-    $plants_planted_data[$row['month']] = $row['count'];
-}
-
-// Harvest Count Chart Data
-$harvest_count_query = "SELECT MONTH(harvest_date) as month, COUNT(*) as count FROM harvests WHERE user_id = ? GROUP BY MONTH(harvest_date)";
-$stmt = $conn->prepare($harvest_count_query);
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$harvest_count_result = $stmt->get_result();
-$harvest_count_data = [];
-while ($row = $harvest_count_result->fetch_assoc()) {
-    $harvest_count_data[$row['month']] = $row['count'];
-}
-
-// Best Plants by Yield Chart Data
-$best_plants_query = "SELECT plant_name, SUM(yield_amount) as total_yield FROM harvests WHERE user_id = ? GROUP BY plant_name ORDER BY total_yield DESC LIMIT 5";
-$stmt = $conn->prepare($best_plants_query);
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$best_plants_result = $stmt->get_result();
-$best_plants_data = [];
-while ($row = $best_plants_result->fetch_assoc()) {
-    $best_plants_data[$row['plant_name']] = $row['total_yield'];
-}
-
-// Most Popular Plants Chart Data
-$popular_plants_query = "SELECT plant_name, COUNT(*) as count FROM plantings WHERE user_id = ? GROUP BY plant_name ORDER BY count DESC LIMIT 5";
-$stmt = $conn->prepare($popular_plants_query);
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$popular_plants_result = $stmt->get_result();
-$popular_plants_data = [];
-while ($row = $popular_plants_result->fetch_assoc()) {
-    $popular_plants_data[$row['plant_name']] = $row['count'];
-}
-
-// Fetch plant records
-$plant_records_query = "SELECT * FROM plant_records WHERE user_id = ? ORDER BY date DESC";
-$stmt = $conn->prepare($plant_records_query);
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$plant_records_result = $stmt->get_result();
-
+// Placeholder data for plant records
+$plantRecords = [
+    ['date' => '2024-05-01', 'event' => 'Seed Sowing', 'location' => 'Indoor Tray', 'notes' => 'Used organic potting mix'],
+    ['date' => '2024-05-15', 'event' => 'Germination', 'location' => 'Indoor Tray', 'notes' => '80% germination rate observed'],
+    ['date' => '2024-06-01', 'event' => 'Transplanting', 'location' => 'Garden Bed A', 'notes' => 'Transplanted strongest seedlings'],
+    ['date' => '2024-07-15', 'event' => 'First Flower', 'location' => 'Garden Bed A', 'notes' => 'Multiple flower buds forming'],
+];
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,7 +41,8 @@ $plant_records_result = $stmt->get_result();
     </style>
 </head>
 <body>
-    <?php include 'menu.php'; ?>
+    <?php include '../includes/menu.php'; ?>
+
     <div class="container mt-5">
         <h1 id="plant-dashboard" class="text-center mb-5">Plant Dashboard</h1>
 
@@ -147,18 +108,18 @@ $plant_records_result = $stmt->get_result();
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php while ($row = $plant_records_result->fetch_assoc()): ?>
+                                <?php foreach ($plantRecords as $record): ?>
                                 <tr>
-                                    <td><?php echo htmlspecialchars($row['date']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['event']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['location']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['notes']); ?></td>
+                                    <td><?php echo htmlspecialchars($record['date']); ?></td>
+                                    <td><?php echo htmlspecialchars($record['event']); ?></td>
+                                    <td><?php echo htmlspecialchars($record['location']); ?></td>
+                                    <td><?php echo htmlspecialchars($record['notes']); ?></td>
                                     <td>
-                                        <i class="bi bi-pencil-square text-primary action-btn edit-row" data-id="<?php echo $row['id']; ?>"></i>
-                                        <i class="bi bi-trash text-danger action-btn delete-row" data-id="<?php echo $row['id']; ?>"></i>
+                                        <i class="bi bi-pencil-square text-primary action-btn edit-row"></i>
+                                        <i class="bi bi-trash text-danger action-btn delete-row"></i>
                                     </td>
                                 </tr>
-                                <?php endwhile; ?>
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
                         <button id="add-row" class="btn btn-success mt-3">Add New Record</button>
@@ -168,7 +129,8 @@ $plant_records_result = $stmt->get_result();
         </div>
     </div>
 
-    <script src="js/crud_events.js"></script>
+    <?php include '../includes/footer.php'; ?>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -176,10 +138,10 @@ $plant_records_result = $stmt->get_result();
             new Chart(document.getElementById('plantsPlantedChart'), {
                 type: 'bar',
                 data: {
-                    labels: <?php echo json_encode(array_keys($plants_planted_data)); ?>,
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
                     datasets: [{
                         label: 'Plants Planted',
-                        data: <?php echo json_encode(array_values($plants_planted_data)); ?>,
+                        data: <?php echo json_encode($plantsPlantedData); ?>,
                         backgroundColor: 'rgba(75, 192, 192, 0.6)'
                     }]
                 },
@@ -197,10 +159,10 @@ $plant_records_result = $stmt->get_result();
             new Chart(document.getElementById('harvestCountChart'), {
                 type: 'line',
                 data: {
-                    labels: <?php echo json_encode(array_keys($harvest_count_data)); ?>,
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
                     datasets: [{
                         label: 'Harvest Count',
-                        data: <?php echo json_encode(array_values($harvest_count_data)); ?>,
+                        data: <?php echo json_encode($harvestCountData); ?>,
                         borderColor: 'rgba(255, 99, 132, 1)',
                         tension: 0.1
                     }]
@@ -219,10 +181,10 @@ $plant_records_result = $stmt->get_result();
             new Chart(document.getElementById('bestPlantsChart'), {
                 type: 'bar',
                 data: {
-                    labels: <?php echo json_encode(array_keys($best_plants_data)); ?>,
+                    labels: ['Tomatoes', 'Cucumbers', 'Peppers', 'Lettuce', 'Carrots'],
                     datasets: [{
                         label: 'Yield (kg)',
-                        data: <?php echo json_encode(array_values($best_plants_data)); ?>,
+                        data: <?php echo json_encode($bestPlantsData); ?>,
                         backgroundColor: 'rgba(153, 102, 255, 0.6)'
                     }]
                 },
@@ -240,9 +202,9 @@ $plant_records_result = $stmt->get_result();
             new Chart(document.getElementById('popularPlantsChart'), {
                 type: 'pie',
                 data: {
-                    labels: <?php echo json_encode(array_keys($popular_plants_data)); ?>,
+                    labels: ['Tomatoes', 'Cucumbers', 'Peppers', 'Lettuce', 'Carrots'],
                     datasets: [{
-                        data: <?php echo json_encode(array_values($popular_plants_data)); ?>,
+                        data: <?php echo json_encode($popularPlantsData); ?>,
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.6)',
                             'rgba(54, 162, 235, 0.6)',
@@ -258,6 +220,49 @@ $plant_records_result = $stmt->get_result();
             });
         });
     </script>
-    <?php include 'footer.php'; ?>
+
+    <script>
+        // Simple CRUD operations for the plant records table
+        document.addEventListener('DOMContentLoaded', function() {
+            const table = document.getElementById('plant-records-table');
+            const addRowBtn = document.getElementById('add-row');
+
+            addRowBtn.addEventListener('click', function() {
+                const newRow = table.insertRow(-1);
+                newRow.innerHTML = `
+                    <td contenteditable="true"></td>
+                    <td contenteditable="true"></td>
+                    <td contenteditable="true"></td>
+                    <td contenteditable="true"></td>
+                    <td>
+                        <i class="bi bi-pencil-square text-primary action-btn edit-row"></i>
+                        <i class="bi bi-trash text-danger action-btn delete-row"></i>
+                    </td>
+                `;
+                addEventListeners(newRow);
+            });
+
+            function addEventListeners(row) {
+                const editBtn = row.querySelector('.edit-row');
+                const deleteBtn = row.querySelector('.delete-row');
+
+                editBtn.addEventListener('click', function() {
+                    const cells = row.querySelectorAll('td:not(:last-child)');
+                    cells.forEach(cell => {
+                        cell.contentEditable = cell.contentEditable === 'true' ? 'false' : 'true';
+                    });
+                });
+
+                deleteBtn.addEventListener('click', function() {
+                    if (confirm('Are you sure you want to delete this record?')) {
+                        row.remove();
+                    }
+                });
+            }
+
+            // Add event listeners to existing rows
+            table.querySelectorAll('tbody tr').forEach(addEventListeners);
+        });
+    </script>
 </body>
 </html>
