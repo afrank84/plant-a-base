@@ -58,8 +58,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!in_array($filetype, $allowed)) {
             $error_message = "Only JPG, JPEG, PNG, and GIF files are allowed.";
         } else {
-            // Generate a unique filename
-            $new_filename = $user['username'] . '_' . uniqid() . '.' . $filetype;
+            // Use existing filename from database, or create a new one if it doesn't exist
+            if ($user['profile_picture']) {
+                $new_filename = $user['profile_picture'];
+            } else {
+                $new_filename = $user['username'] . '_' . uniqid() . '.' . $filetype;
+            }
             $upload_path = '../uploads/profile_pictures/' . $new_filename;
 
             // Create image from uploaded file
@@ -116,13 +120,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 imagedestroy($image);
                 imagedestroy($new_image);
 
-                // Update the database with the new filename
-                $stmt = $pdo->prepare("UPDATE Users SET profile_picture = ? WHERE user_id = ?");
-                if ($stmt->execute([$new_filename, $user_id])) {
-                    $success_message .= " Profile picture updated successfully.";
-                    $user['profile_picture'] = $new_filename;
+                // Update the database with the new filename only if it's a new file
+                if ($new_filename !== $user['profile_picture']) {
+                    $stmt = $pdo->prepare("UPDATE Users SET profile_picture = ? WHERE user_id = ?");
+                    if ($stmt->execute([$new_filename, $user_id])) {
+                        $success_message .= " Profile picture updated successfully.";
+                        $user['profile_picture'] = $new_filename;
+                    } else {
+                        $error_message = "Failed to update profile picture in the database.";
+                    }
                 } else {
-                    $error_message = "Failed to update profile picture in the database.";
+                    $success_message .= " Profile picture updated successfully.";
                 }
             } else {
                 $error_message = "Failed to process the image.";
