@@ -1,7 +1,12 @@
 <?php
 require_once '../includes/db_connection.php';
-
 session_start();
+
+// Redirect if already logged in
+if (isset($_SESSION['user_id'])) {
+    //header("Location: dashboard.php");
+    exit();
+}
 
 $error = '';
 $success = '';
@@ -9,26 +14,22 @@ $success = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST['email']);
     $password = $_POST['password'];
-
+    
     if (empty($email) || empty($password)) {
         $error = "Both email and password are required.";
     } else {
         try {
             $pdo = getConnection();
             
-            // Check if user exists
             $stmt = $pdo->prepare("SELECT user_id, username, password_hash FROM Users WHERE email = ?");
             $stmt->execute([$email]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
             
             if ($user && password_verify($password, $user['password_hash'])) {
-                // Login successful
                 $_SESSION['user_id'] = $user['user_id'];
                 $_SESSION['username'] = $user['username'];
-                $success = "Login successful! Welcome, " . htmlspecialchars($user['username']) . "!";
-                // Redirect to dashboard or home page
-                // header("Location: dashboard.php");
-                // exit();
+                header("Location: dashboard.php");
+                exit();
             } else {
                 $error = "Invalid email or password.";
             }
@@ -39,7 +40,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,16 +48,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Login - Plant-a-base</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        .footer {
-            background-color: #f8f9fa;
-            padding: 20px 0;
-            margin-top: 40px;
-        }
-    </style>
 </head>
 <body>
-    <div id="menu-placeholder"></div>
+    <?php include '../includes/menu.php'; ?>
+
     <div class="container mt-5">
         <h1 class="text-center mb-5">Login</h1>
         
@@ -81,19 +75,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
                 </form>
                 <p class="mt-3 text-center">Don't have an account? <a href="register.php">Sign up here</a></p>
             </div>
         </div>
     </div>
-    <footer class="footer">
-        <div class="container">
-            <p class="text-muted text-center">&copy; 2024 Plant-a-base. All rights reserved.</p>
-        </div>
-    </footer>
-    <script src="../js/menu.js"></script>
-    <script src="../js/footer.js"></script>
+
+    <?php include '../includes/footer.php'; ?>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
