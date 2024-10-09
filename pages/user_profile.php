@@ -251,6 +251,27 @@ $profile_picture_url = $user['profile_picture']
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+       document.getElementById('profile-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+        
+            fetch(this.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.newImageUrl) {
+                    document.querySelector('.profile-picture-container img').src = data.newImageUrl + '?t=' + new Date().getTime();
+                }
+                // Display success message
+                alert(data.message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+        
         document.getElementById('profile_picture').addEventListener('change', function(event) {
             if (event.target.files && event.target.files[0]) {
                 var reader = new FileReader();
