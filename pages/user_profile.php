@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error_message = "Only JPG, JPEG, PNG, and GIF files are allowed.";
         } else {
             // Generate a unique filename
-            $new_filename = uniqid() . '.' . $filetype;
+            $new_filename = $user['username'] . '_' . uniqid() . '.' . $filetype;
             $upload_path = '../uploads/profile_pictures/' . $new_filename;
 
             if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $upload_path)) {
