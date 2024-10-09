@@ -33,7 +33,7 @@
     </style>
 </head>
 <body>
-    <div id="menu-placeholder"></div>
+    <?php include '../includes/menu.php'; ?>
     <div class="container mt-5">
         <h1 class="text-center mb-5">Welcome to Plant-a-base</h1>
         
@@ -110,7 +110,6 @@
 
     <?php include '../includes/footer.php'; ?>
 
-    <script src="../includes/menu.php"></script>
     <script src="../js/captcha.js"></script>
     <script src="https://kit.fontawesome.com/c2e74e567e.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
