@@ -92,6 +92,31 @@ $profile_picture_url = $user['profile_picture']
     <title>User Profile</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .profile-picture-container {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .profile-picture-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            border-radius: 50%;
+        }
+        .profile-picture-container:hover .profile-picture-overlay {
+            opacity: 1;
+        }
+    </style>
 </head>
 <body>
     <?php include '../includes/menu.php'; ?>
@@ -115,14 +140,19 @@ $profile_picture_url = $user['profile_picture']
             <div class="col-md-4 mb-4">
                 <div class="card">
                     <div class="card-body text-center">
-                        <img src="<?php echo $profile_picture_url; ?>" alt="Profile Picture" class="rounded-circle mb-3" width="150" height="150">
+                        <div class="profile-picture-container" onclick="document.getElementById('profile_picture').click();">
+                            <img src="<?php echo $profile_picture_url; ?>" alt="Profile Picture" class="rounded-circle mb-3" width="150" height="150">
+                            <div class="profile-picture-overlay">
+                                <i class="fas fa-camera"></i> Change Picture
+                            </div>
+                        </div>
                         <h5 class="card-title"><?php echo htmlspecialchars($user['username']); ?></h5>
                         <p class="card-text">Member since: <?php echo date('F j, Y', strtotime($user['date_joined'])); ?></p>
                     </div>
                 </div>
             </div>
             <div class="col-md-8">
-                <form method="post" enctype="multipart/form-data">
+                <form method="post" enctype="multipart/form-data" id="profile-form">
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
                         <input type="text" class="form-control" id="username" value="<?php echo htmlspecialchars($user['username']); ?>" disabled>
@@ -143,9 +173,8 @@ $profile_picture_url = $user['profile_picture']
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="profile_picture" class="form-label">Profile Picture</label>
-                        <input type="file" class="form-control" id="profile_picture" name="profile_picture">
-                        <small class="form-text text-muted">Allowed formats: JPG, JPEG, PNG, GIF</small>
+                        <input type="file" class="form-control d-none" id="profile_picture" name="profile_picture" accept="image/*">
+                        <small class="form-text text-muted">Click on the profile picture to change it. Allowed formats: JPG, JPEG, PNG, GIF</small>
                     </div>
                     <button type="submit" class="btn btn-primary">Update Profile</button>
                 </form>
@@ -160,5 +189,16 @@ $profile_picture_url = $user['profile_picture']
     <?php include '../includes/footer.php'; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('profile_picture').addEventListener('change', function(event) {
+            if (event.target.files && event.target.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.querySelector('.profile-picture-container img').src = e.target.result;
+                };
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        });
+    </script>
 </body>
 </html>
