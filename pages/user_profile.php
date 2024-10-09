@@ -53,16 +53,69 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == 0) {
         $allowed = ['jpg', 'jpeg', 'png', 'gif'];
         $filename = $_FILES['profile_picture']['name'];
-        $filetype = pathinfo($filename, PATHINFO_EXTENSION);
+        $filetype = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 
-        if (!in_array(strtolower($filetype), $allowed)) {
+        if (!in_array($filetype, $allowed)) {
             $error_message = "Only JPG, JPEG, PNG, and GIF files are allowed.";
         } else {
             // Generate a unique filename
-            $new_filename = $user['username'] . '_' . uniqid() . '.' . $filetype;
+            $new_filename = uniqid() . '.' . $filetype;
             $upload_path = '../uploads/profile_pictures/' . $new_filename;
 
-            if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $upload_path)) {
+            // Create image from uploaded file
+            if ($filetype == 'jpg' || $filetype == 'jpeg') {
+                $image = imagecreatefromjpeg($_FILES['profile_picture']['tmp_name']);
+            } elseif ($filetype == 'png') {
+                $image = imagecreatefrompng($_FILES['profile_picture']['tmp_name']);
+            } elseif ($filetype == 'gif') {
+                $image = imagecreatefromgif($_FILES['profile_picture']['tmp_name']);
+            }
+
+            if ($image) {
+                // Get original dimensions
+                $orig_width = imagesx($image);
+                $orig_height = imagesy($image);
+
+                // Set new dimensions (e.g., max width of 300px)
+                $max_width = 300;
+                $max_height = 300;
+
+                // Calculate new dimensions while maintaining aspect ratio
+                if ($orig_width > $orig_height) {
+                    $new_width = $max_width;
+                    $new_height = intval($orig_height * $max_width / $orig_width);
+                } else {
+                    $new_height = $max_height;
+                    $new_width = intval($orig_width * $max_height / $orig_height);
+                }
+
+                // Create new image with new dimensions
+                $new_image = imagecreatetruecolor($new_width, $new_height);
+
+                // Preserve transparency for PNG files
+                if ($filetype == 'png') {
+                    imagealphablending($new_image, false);
+                    imagesavealpha($new_image, true);
+                    $transparent = imagecolorallocatealpha($new_image, 255, 255, 255, 127);
+                    imagefilledrectangle($new_image, 0, 0, $new_width, $new_height, $transparent);
+                }
+
+                // Resize the image
+                imagecopyresampled($new_image, $image, 0, 0, 0, 0, $new_width, $new_height, $orig_width, $orig_height);
+
+                // Save the resized image
+                if ($filetype == 'jpg' || $filetype == 'jpeg') {
+                    imagejpeg($new_image, $upload_path, 85); // 85 is the quality (0-100)
+                } elseif ($filetype == 'png') {
+                    imagepng($new_image, $upload_path, 8); // 8 is the compression level (0-9)
+                } elseif ($filetype == 'gif') {
+                    imagegif($new_image, $upload_path);
+                }
+
+                // Free up memory
+                imagedestroy($image);
+                imagedestroy($new_image);
+
                 // Update the database with the new filename
                 $stmt = $pdo->prepare("UPDATE Users SET profile_picture = ? WHERE user_id = ?");
                 if ($stmt->execute([$new_filename, $user_id])) {
@@ -72,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $error_message = "Failed to update profile picture in the database.";
                 }
             } else {
-                $error_message = "Failed to upload the profile picture.";
+                $error_message = "Failed to process the image.";
             }
         }
     }
