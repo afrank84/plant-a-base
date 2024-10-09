@@ -110,7 +110,7 @@
 
     <?php include '../includes/footer.php'; ?>
 
-    <script src="../includes/menu.js"></script>
+    <script src="../includes/menu.php"></script>
     <script src="../js/captcha.js"></script>
     <script src="https://kit.fontawesome.com/c2e74e567e.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
