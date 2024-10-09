@@ -7,10 +7,9 @@ function is_active($page) {
 }
 
 // Construct the profile picture URL
-$default_avatar = '../img/default_profile_picture.png'; // Update this to your default avatar path
-$profile_picture_filename = isset($_SESSION['profile_picture']) ? $_SESSION['profile_picture'] : '';
-$profile_picture_url = $profile_picture_filename 
-    ? "../uploads/profile_pictures/" . $profile_picture_filename 
+$default_avatar = '../img/default_profile_picture.png';
+$profile_picture_url = isset($_SESSION['profile_picture']) && !empty($_SESSION['profile_picture'])
+    ? "../uploads/profile_pictures/" . $_SESSION['profile_picture']
     : $default_avatar;
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
