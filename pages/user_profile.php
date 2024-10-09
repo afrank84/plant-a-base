@@ -250,10 +250,9 @@ $profile_picture_url = $user['profile_picture']
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-       document.getElementById('profile-form').addEventListener('submit', function(e) {
+        document.getElementById('profile-form').addEventListener('submit', function(e) {
             e.preventDefault();
             var formData = new FormData(this);
-        
             fetch(this.action, {
                 method: 'POST',
                 body: formData
@@ -262,15 +261,42 @@ $profile_picture_url = $user['profile_picture']
             .then(data => {
                 if (data.newImageUrl) {
                     document.querySelector('.profile-picture-container img').src = data.newImageUrl + '?t=' + new Date().getTime();
+                    
+                    // Create and show a custom notification
+                    const notification = document.createElement('div');
+                    notification.className = 'alert alert-success alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3';
+                    notification.setAttribute('role', 'alert');
+                    notification.innerHTML = `
+                        <strong>Success!</strong> ${data.message}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    `;
+                    document.body.appendChild(notification);
+
+                    // Remove the notification after 5 seconds
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 5000);
                 }
-                // Display success message
-                alert(data.message);
             })
             .catch(error => {
                 console.error('Error:', error);
+                // Show error notification
+                const errorNotification = document.createElement('div');
+                errorNotification.className = 'alert alert-danger alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3';
+                errorNotification.setAttribute('role', 'alert');
+                errorNotification.innerHTML = `
+                    <strong>Error!</strong> Failed to update profile picture.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+                document.body.appendChild(errorNotification);
+
+                // Remove the error notification after 5 seconds
+                setTimeout(() => {
+                    errorNotification.remove();
+                }, 5000);
             });
         });
-        
+
         document.getElementById('profile_picture').addEventListener('change', function(event) {
             if (event.target.files && event.target.files[0]) {
                 var reader = new FileReader();
