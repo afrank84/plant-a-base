@@ -140,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Determine the profile picture URL
 $profile_picture_url = $user['profile_picture'] 
-    ? "../uploads/profile_pictures/" . htmlspecialchars($user['profile_picture'])
+    ? "../uploads/profile_pictures/" . htmlspecialchars($user['profile_picture']) . "?t=" . time()
     : "https://via.placeholder.com/150";
 ?>
 
