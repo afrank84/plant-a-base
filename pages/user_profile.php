@@ -123,10 +123,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Update the database with the new filename
                 $stmt = $pdo->prepare("UPDATE Users SET profile_picture = ? WHERE user_id = ?");
                 if ($stmt->execute([$new_filename, $user_id])) {
-                    $success_message = json_encode([
-                        "message" => "Profile picture updated successfully.",
-                        "newImageUrl" => "../uploads/profile_pictures/" . $new_filename
-                    ]);
+                    // If this is an AJAX request, send JSON response
+                    if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+                        header('Content-Type: application/json');
+                        echo json_encode([
+                            "message" => "Profile picture updated successfully.",
+                            "newImageUrl" => "../uploads/profile_pictures/" . $new_filename
+                        ]);
+                        exit;
+                    } else {
+                        $success_message = "Profile picture updated successfully.";
+                    }
                     $user['profile_picture'] = $new_filename;
                 } else {
                     $error_message = "Failed to update profile picture in the database.";
@@ -253,49 +260,48 @@ $profile_picture_url = $user['profile_picture']
         document.getElementById('profile-form').addEventListener('submit', function(e) {
             e.preventDefault();
             var formData = new FormData(this);
-            fetch(this.action, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.newImageUrl) {
-                    document.querySelector('.profile-picture-container img').src = data.newImageUrl + '?t=' + new Date().getTime();
-                    
-                    // Create and show a custom notification
-                    const notification = document.createElement('div');
-                    notification.className = 'alert alert-success alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3';
-                    notification.setAttribute('role', 'alert');
-                    notification.innerHTML = `
-                        <strong>Success!</strong> ${data.message}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    `;
-                    document.body.appendChild(notification);
+            
+            // Check if a file is being uploaded
+            var fileInput = document.getElementById('profile_picture');
+            var isFileUpload = fileInput.files && fileInput.files[0];
 
-                    // Remove the notification after 5 seconds
-                    setTimeout(() => {
-                        notification.remove();
-                    }, 5000);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                // Show error notification
-                const errorNotification = document.createElement('div');
-                errorNotification.className = 'alert alert-danger alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3';
-                errorNotification.setAttribute('role', 'alert');
-                errorNotification.innerHTML = `
-                    <strong>Error!</strong> Failed to update profile picture.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                `;
-                document.body.appendChild(errorNotification);
-
-                // Remove the error notification after 5 seconds
-                setTimeout(() => {
-                    errorNotification.remove();
-                }, 5000);
-            });
+            if (isFileUpload) {
+                // If it's a file upload, use AJAX
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.newImageUrl) {
+                        document.querySelector('.profile-picture-container img').src = data.newImageUrl + '?t=' + new Date().getTime();
+                        showNotification('success', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showNotification('error', 'Failed to update profile picture.');
+                });
+            } else {
+                // If it's not a file upload, submit the form normally
+                this.submit();
+            }
         });
+
+        function showNotification(type, message) {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type} alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3`;
+            notification.setAttribute('role', 'alert');
+            notification.innerHTML = `
+                <strong>${type === 'success' ? 'Success!' : 'Error!'}</strong> ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
 
         document.getElementById('profile_picture').addEventListener('change', function(event) {
             if (event.target.files && event.target.files[0]) {
