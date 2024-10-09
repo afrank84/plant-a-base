@@ -120,11 +120,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 imagedestroy($image);
                 imagedestroy($new_image);
 
-                // Update the database with the new filename only if it's a new file
-                if ($new_filename !== $user['profile_picture']) {
-                    $stmt = $pdo->prepare("UPDATE Users SET profile_picture = ? WHERE user_id = ?");
+                 // Update the database with the new filename
+                $stmt = $pdo->prepare("UPDATE Users SET profile_picture = ? WHERE user_id = ?");
                     if ($stmt->execute([$new_filename, $user_id])) {
-                        $success_message .= " Profile picture updated successfully.";
+                        $success_message = json_encode([
+                            "message" => "Profile picture updated successfully.",
+                            "newImageUrl" => "../uploads/profile_pictures/" . $new_filename
+                        ]);
                         $user['profile_picture'] = $new_filename;
                     } else {
                         $error_message = "Failed to update profile picture in the database.";
