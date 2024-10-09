@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($user && password_verify($password, $user['password_hash'])) {
                 $_SESSION['user_id'] = $user['user_id'];
                 $_SESSION['username'] = $user['username'];
-                header("Location: dashboard.php");
+                header("Location: user_dashboard.php");
                 exit();
             } else {
                 $error = "Invalid email or password.";
