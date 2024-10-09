@@ -1,12 +1,11 @@
 <?php
+session_start();
 $current_page = basename($_SERVER['PHP_SELF']);
-
 function is_active($page) {
     global $current_page;
     return $current_page === $page ? 'active' : '';
 }
 ?>
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
     <div class="container-fluid">
         <a class="navbar-brand fw-bold" href="#"><i class="fas fa-leaf me-2"></i>Plant-a-base</a>
@@ -24,9 +23,11 @@ function is_active($page) {
                 <li class="nav-item">
                     <a class="nav-link <?php echo is_active('template.php'); ?>" href="template.php">Template</a>
                 </li>
+                <?php if (isset($_SESSION['user_id'])): ?>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo is_active('dashboard.php'); ?>" href="dashboard.php">Dashboard</a>
+                    <a class="nav-link <?php echo is_active('user_dashboard.php'); ?>" href="user_dashboard.php">Dashboard</a>
                 </li>
+                <?php endif; ?>
                 <li class="nav-item">
                     <a class="nav-link <?php echo is_active('contact.php'); ?>" href="contact.php">Contact</a>
                 </li>
@@ -36,13 +37,26 @@ function is_active($page) {
                 <button class="btn btn-success" type="submit">Search</button>
             </form>
             <div class="d-flex align-items-center">
-                <a class="btn btn-outline-light me-2" href="login.php"><i class="fas fa-sign-in-alt me-1"></i>Login</a>
-                <a class="btn btn-outline-light" href="signup.php"><i class="fas fa-user-plus me-1"></i>Sign Up</a>
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user me-1"></i>My Account
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="user_profile.php">Profile</a></li>
+                            <li><a class="dropdown-item" href="user_dashboard.php">Dashboard</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                        </ul>
+                    </div>
+                <?php else: ?>
+                    <a class="btn btn-outline-light me-2" href="login.php"><i class="fas fa-sign-in-alt me-1"></i>Login</a>
+                    <a class="btn btn-outline-light" href="register.php"><i class="fas fa-user-plus me-1"></i>Sign Up</a>
+                <?php endif; ?>
             </div>
         </div>
     </div>
 </nav>
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('.nav-link');
