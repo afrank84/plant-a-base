@@ -44,8 +44,13 @@ try {
         }
         ?>
 
+        <!-- Add search bar -->
+        <div class="mb-3">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search plants...">
+        </div>
+
         <?php if (!empty($plants)): ?>
-            <table class="table table-striped">
+            <table class="table table-striped" id="plantsTable">
                 <thead>
                     <tr>
                         <th>Plant ID</th>
@@ -71,5 +76,34 @@ try {
     <?php include '../includes/footer.php'; ?>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Add JavaScript for search functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const table = document.getElementById('plantsTable');
+            const rows = table.getElementsByTagName('tr');
+
+            searchInput.addEventListener('keyup', function() {
+                const searchTerm = searchInput.value.toLowerCase();
+
+                for (let i = 1; i < rows.length; i++) {
+                    const row = rows[i];
+                    const cells = row.getElementsByTagName('td');
+                    let found = false;
+
+                    for (let j = 0; j < cells.length; j++) {
+                        const cellText = cells[j].textContent.toLowerCase();
+                        if (cellText.includes(searchTerm)) {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    row.style.display = found ? '' : 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
