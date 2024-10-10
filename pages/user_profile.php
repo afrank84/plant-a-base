@@ -218,7 +218,7 @@ $profile_picture_url = $user['profile_picture']
                 <div class="card">
                     <div class="card-body text-center">
                         <div class="profile-picture-container" onclick="document.getElementById('profile_picture').click();">
-                            <img src="<?php echo $profile_picture_url; ?>" alt="Profile Picture" class="rounded-circle mb-3" width="150" height="150">
+                            <img id="profile-picture" src="<?php echo $profile_picture_url; ?>" alt="Profile Picture" class="rounded-circle mb-3" width="150" height="150">
                             <div class="profile-picture-overlay">
                                 <i class="fas fa-camera"></i> Change Picture
                             </div>
@@ -267,19 +267,61 @@ $profile_picture_url = $user['profile_picture']
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.getElementById('profile-form').addEventListener('submit', function(e) {
-            // Form submission is now handled server-side, so we don't need to prevent default behavior
-        });
+    document.getElementById('profile-form').addEventListener('submit', function(e) {
+        // Prevent the default form submission
+        e.preventDefault();
 
-        document.getElementById('profile_picture').addEventListener('change', function(event) {
-            if (event.target.files && event.target.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    document.querySelector('.profile-picture-container img').src = e.target.result;
-                };
-                reader.readAsDataURL(event.target.files[0]);
+        // Submit the form data using fetch API
+        fetch(this.action, {
+            method: 'POST',
+            body: new FormData(this)
+        })
+        .then(response => response.text())
+        .then(html => {
+            // Replace the entire page content with the new HTML
+            document.documentElement.innerHTML = html;
+            
+            // After replacing the content, we need to reattach our event listeners
+            attachEventListeners();
+            
+            // Force a reload of the profile picture
+            var profilePic = document.getElementById('profile-picture');
+            if (profilePic) {
+                profilePic.src = profilePic.src.split('?')[0] + '?t=' + new Date().getTime();
             }
+        })
+        .catch(error => {
+            console.error('Error:', error);
         });
+    });
+
+    function attachEventListeners() {
+        // Reattach the form submit event listener
+        var form = document.getElementById('profile-form');
+        if (form) {
+            form.addEventListener('submit', arguments.callee.caller);
+        }
+
+        // Reattach the profile picture change event listener
+        var profilePictureInput = document.getElementById('profile_picture');
+        if (profilePictureInput) {
+            profilePictureInput.addEventListener('change', function(event) {
+                if (event.target.files && event.target.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        var profilePic = document.querySelector('.profile-picture-container img');
+                        if (profilePic) {
+                            profilePic.src = e.target.result;
+                        }
+                    };
+                    reader.readAsDataURL(event.target.files[0]);
+                }
+            });
+        }
+    }
+
+    // Initial attachment of event listeners
+    attachEventListeners();
     </script>
 </body>
 </html>
