@@ -33,7 +33,7 @@ try {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <?php include '../includes/header.php'; ?>
+    <?php include '../includes/menu.php'; ?>
 
     <div class="container mt-5">
         <h1 class="text-center mb-5">Plants List</h1>
