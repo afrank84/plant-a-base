@@ -25,39 +25,22 @@ $zones = $stmt->fetchAll(PDO::FETCH_COLUMN);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
     $zone = filter_input(INPUT_POST, 'zone', FILTER_SANITIZE_STRING);
+    $profile_picture_updated = false;
 
-    // Validate email
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error_message = "Invalid email format";
-    } else {
-        // Check if email already exists for another user
-        $stmt = $pdo->prepare("SELECT user_id FROM Users WHERE email = ? AND user_id != ?");
-        $stmt->execute([$email, $user_id]);
-        if ($stmt->fetchColumn()) {
-            $error_message = "Email already in use by another account";
-        } else {
-            // Update user information
-            $stmt = $pdo->prepare("UPDATE Users SET email = ?, zone = ? WHERE user_id = ?");
-            if ($stmt->execute([$email, $zone, $user_id])) {
-                $success_message = "Profile updated successfully!";
-                // Update the user array with new values
-                $user['email'] = $email;
-                $user['zone'] = $zone;
-            } else {
-                $error_message = "An error occurred while updating your profile";
+    // Start transaction
+    $pdo->beginTransaction();
+
+    try {
+        // First, handle profile picture upload if present
+        if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == 0) {
+            $allowed = ['jpg', 'jpeg', 'png', 'gif'];
+            $filename = $_FILES['profile_picture']['name'];
+            $filetype = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+
+            if (!in_array($filetype, $allowed)) {
+                throw new Exception("Only JPG, JPEG, PNG, and GIF files are allowed.");
             }
-        }
-    }
 
-    // Handle profile picture upload
-    if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == 0) {
-        $allowed = ['jpg', 'jpeg', 'png', 'gif'];
-        $filename = $_FILES['profile_picture']['name'];
-        $filetype = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-
-        if (!in_array($filetype, $allowed)) {
-            $error_message = "Only JPG, JPEG, PNG, and GIF files are allowed.";
-        } else {
             // Use existing filename from database, or create a new one if it doesn't exist
             if ($user['profile_picture']) {
                 $new_filename = $user['profile_picture'];
@@ -75,73 +58,100 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $image = imagecreatefromgif($_FILES['profile_picture']['tmp_name']);
             }
 
-            if ($image) {
-                // Get original dimensions
-                $orig_width = imagesx($image);
-                $orig_height = imagesy($image);
+            if (!$image) {
+                throw new Exception("Failed to process the image.");
+            }
 
-                // Set new dimensions (e.g., max width of 300px)
-                $max_width = 300;
-                $max_height = 300;
+            // Get original dimensions
+            $orig_width = imagesx($image);
+            $orig_height = imagesy($image);
 
-                // Calculate new dimensions while maintaining aspect ratio
-                if ($orig_width > $orig_height) {
-                    $new_width = $max_width;
-                    $new_height = intval($orig_height * $max_width / $orig_width);
-                } else {
-                    $new_height = $max_height;
-                    $new_width = intval($orig_width * $max_height / $orig_height);
-                }
+            // Set new dimensions (e.g., max width of 300px)
+            $max_width = 300;
+            $max_height = 300;
 
-                // Create new image with new dimensions
-                $new_image = imagecreatetruecolor($new_width, $new_height);
-
-                // Preserve transparency for PNG files
-                if ($filetype == 'png') {
-                    imagealphablending($new_image, false);
-                    imagesavealpha($new_image, true);
-                    $transparent = imagecolorallocatealpha($new_image, 255, 255, 255, 127);
-                    imagefilledrectangle($new_image, 0, 0, $new_width, $new_height, $transparent);
-                }
-
-                // Resize the image
-                imagecopyresampled($new_image, $image, 0, 0, 0, 0, $new_width, $new_height, $orig_width, $orig_height);
-
-                // Save the resized image
-                if ($filetype == 'jpg' || $filetype == 'jpeg') {
-                    imagejpeg($new_image, $upload_path, 85); // 85 is the quality (0-100)
-                } elseif ($filetype == 'png') {
-                    imagepng($new_image, $upload_path, 8); // 8 is the compression level (0-9)
-                } elseif ($filetype == 'gif') {
-                    imagegif($new_image, $upload_path);
-                }
-
-                // Free up memory
-                imagedestroy($image);
-                imagedestroy($new_image);
-
-                // Update the database with the new filename
-                $stmt = $pdo->prepare("UPDATE Users SET profile_picture = ? WHERE user_id = ?");
-                if ($stmt->execute([$new_filename, $user_id])) {
-                    // If this is an AJAX request, send JSON response
-                    if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-                        header('Content-Type: application/json');
-                        echo json_encode([
-                            "message" => "Profile picture updated successfully.",
-                            "newImageUrl" => "../uploads/profile_pictures/" . $new_filename
-                        ]);
-                        exit;
-                    } else {
-                        $success_message = "Profile picture updated successfully.";
-                    }
-                    $user['profile_picture'] = $new_filename;
-                } else {
-                    $error_message = "Failed to update profile picture in the database.";
-                }
+            // Calculate new dimensions while maintaining aspect ratio
+            if ($orig_width > $orig_height) {
+                $new_width = $max_width;
+                $new_height = intval($orig_height * $max_width / $orig_width);
             } else {
-                $error_message = "Failed to process the image.";
+                $new_height = $max_height;
+                $new_width = intval($orig_width * $max_height / $orig_height);
+            }
+
+            // Create new image with new dimensions
+            $new_image = imagecreatetruecolor($new_width, $new_height);
+
+            // Preserve transparency for PNG files
+            if ($filetype == 'png') {
+                imagealphablending($new_image, false);
+                imagesavealpha($new_image, true);
+                $transparent = imagecolorallocatealpha($new_image, 255, 255, 255, 127);
+                imagefilledrectangle($new_image, 0, 0, $new_width, $new_height, $transparent);
+            }
+
+            // Resize the image
+            imagecopyresampled($new_image, $image, 0, 0, 0, 0, $new_width, $new_height, $orig_width, $orig_height);
+
+            // Save the resized image
+            if ($filetype == 'jpg' || $filetype == 'jpeg') {
+                imagejpeg($new_image, $upload_path, 85); // 85 is the quality (0-100)
+            } elseif ($filetype == 'png') {
+                imagepng($new_image, $upload_path, 8); // 8 is the compression level (0-9)
+            } elseif ($filetype == 'gif') {
+                imagegif($new_image, $upload_path);
+            }
+
+            // Free up memory
+            imagedestroy($image);
+            imagedestroy($new_image);
+
+            // Update the database with the new filename
+            $stmt = $pdo->prepare("UPDATE Users SET profile_picture = ? WHERE user_id = ?");
+            if ($stmt->execute([$new_filename, $user_id])) {
+                $profile_picture_updated = true;
+            } else {
+                throw new Exception("Failed to update profile picture in the database.");
             }
         }
+
+        // Next, update other profile information
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new Exception("Invalid email format");
+        }
+
+        // Check if email already exists for another user
+        $stmt = $pdo->prepare("SELECT user_id FROM Users WHERE email = ? AND user_id != ?");
+        $stmt->execute([$email, $user_id]);
+        if ($stmt->fetchColumn()) {
+            throw new Exception("Email already in use by another account");
+        }
+
+        // Update user information
+        $stmt = $pdo->prepare("UPDATE Users SET email = ?, zone = ? WHERE user_id = ?");
+        if (!$stmt->execute([$email, $zone, $user_id])) {
+            throw new Exception("Failed to update profile information");
+        }
+
+        // If we've made it this far, commit the transaction
+        $pdo->commit();
+
+        $success_message = "Profile updated successfully!";
+        if ($profile_picture_updated) {
+            $success_message .= " Profile picture has been changed.";
+        }
+
+        // Update the user array with new values
+        $user['email'] = $email;
+        $user['zone'] = $zone;
+        if ($profile_picture_updated) {
+            $user['profile_picture'] = $new_filename;
+        }
+
+    } catch (Exception $e) {
+        // An error occurred, rollback the transaction
+        $pdo->rollBack();
+        $error_message = $e->getMessage();
     }
 }
 
