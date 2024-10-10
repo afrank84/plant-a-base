@@ -1,49 +1,9 @@
-<?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-require_once '../includes/db_connection.php';
-session_start();
-
-// Redirect if not logged in
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
-}
-
-$error = '';
-$plant = null;
-
-if (isset($_GET['id'])) {
-    $plant_id = $_GET['id'];
-
-    try {
-        $pdo = getConnection();
-
-        // Prepare and execute the query to get plant information
-        $stmt = $pdo->prepare("SELECT * FROM Plants WHERE plant_id = ?");
-        $stmt->execute([$plant_id]);
-        $plant = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if (!$plant) {
-            $error = "Plant not found.";
-        }
-
-    } catch (PDOException $e) {
-        $error = "A database error occurred. Please try again later.";
-        error_log("Database error: " . $e->getMessage());
-    }
-} else {
-    $error = "No plant ID provided.";
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $plant ? htmlspecialchars($plant['Parent'] . ' - ' . $plant['Variety']) : 'Plant Not Found'; ?> - Plant-a-base</title>
+    <title>Plant Display Template</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -84,12 +44,9 @@ if (isset($_GET['id'])) {
   <?php include '../includes/menu.php'; ?>
     
     <div class="container mt-5">
-        <?php if ($error): ?>
-            <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
-        <?php elseif ($plant): ?>
-            <h1 id="parentName"><?php echo htmlspecialchars($plant['Parent']); ?></h1>
-            <h2 id="varietyName"><?php echo htmlspecialchars($plant['Variety']); ?></h2>
-            <h3 id="plantType">Type</h3>
+        <h1 id="parentName">Parent Plant Name</h1>
+        <h2 id="varietyName">Variety Name</h2>
+        <h3 id="plantType">Type</h3>
 
         <div class="row mb-4">
             <div class="col-md-3 mb-3">
@@ -193,6 +150,7 @@ if (isset($_GET['id'])) {
                 </tr>
             </tbody>
         </table>
+       
     </div>
 
     <?php include '../includes/footer.php'; ?>
