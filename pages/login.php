@@ -21,13 +21,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         try {
             $pdo = getConnection();
             
-            $stmt = $pdo->prepare("SELECT user_id, username, password_hash FROM Users WHERE email = ?");
+            // Optimized query to fetch user data including profile picture
+            $stmt = $pdo->prepare("SELECT user_id, username, password_hash, profile_picture FROM Users WHERE email = ?");
             $stmt->execute([$email]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
             
             if ($user && password_verify($password, $user['password_hash'])) {
                 $_SESSION['user_id'] = $user['user_id'];
                 $_SESSION['username'] = $user['username'];
+                $_SESSION['profile_picture'] = $user['profile_picture'];
                 header("Location: user_dashboard.php");
                 exit();
             } else {
