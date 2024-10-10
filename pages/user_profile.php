@@ -268,50 +268,8 @@ $profile_picture_url = $user['profile_picture']
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.getElementById('profile-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            var formData = new FormData(this);
-            
-            // Check if a file is being uploaded
-            var fileInput = document.getElementById('profile_picture');
-            var isFileUpload = fileInput.files && fileInput.files[0];
-
-            if (isFileUpload) {
-                // If it's a file upload, use AJAX
-                fetch(this.action, {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.newImageUrl) {
-                        document.querySelector('.profile-picture-container img').src = data.newImageUrl + '?t=' + new Date().getTime();
-                        showNotification('success', data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    showNotification('error', 'Failed to update profile picture.');
-                });
-            } else {
-                // If it's not a file upload, submit the form normally
-                this.submit();
-            }
+            // Form submission is now handled server-side, so we don't need to prevent default behavior
         });
-
-        function showNotification(type, message) {
-            const notification = document.createElement('div');
-            notification.className = `alert alert-${type} alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3`;
-            notification.setAttribute('role', 'alert');
-            notification.innerHTML = `
-                <strong>${type === 'success' ? 'Success!' : 'Error!'}</strong> ${message}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            `;
-            document.body.appendChild(notification);
-
-            setTimeout(() => {
-                notification.remove();
-            }, 5000);
-        }
 
         document.getElementById('profile_picture').addEventListener('change', function(event) {
             if (event.target.files && event.target.files[0]) {
