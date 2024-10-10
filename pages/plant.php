@@ -89,6 +89,9 @@ if (isset($_GET['id'])) {
         <!-- Check if there's an error, display it if exists -->
         <?php if ($error): ?>
             <div class="error-message"><?php echo htmlspecialchars($error); ?></div>
+            <h1 id="parentName">Parent</h1>
+            <h2 id="varietyName">Variety</h2>
+            <h3 id="plantType">Type</h3>
         <?php else: ?>
             <!-- Dynamically display the plant details -->
             <h1 id="parentName"><?php echo htmlspecialchars($parentName); ?></h1>
