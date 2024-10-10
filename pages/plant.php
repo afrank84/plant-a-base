@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once '../includes/db_connection.php';
 session_start();
 
@@ -189,7 +193,6 @@ if (isset($_GET['id'])) {
                 </tr>
             </tbody>
         </table>
-       
     </div>
 
     <?php include '../includes/footer.php'; ?>
