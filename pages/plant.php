@@ -10,6 +10,8 @@ if (!isset($_SESSION['user_id'])) {
 
 $error = '';
 $plant = null;
+$parentName = '';
+$varietyName = '';
 
 if (isset($_GET['id'])) {
     $plant_id = $_GET['id'];
@@ -18,11 +20,15 @@ if (isset($_GET['id'])) {
         $pdo = getConnection();
 
         // Prepare and execute the query to get plant information
-        $stmt = $pdo->prepare("SELECT * FROM Plants WHERE plant_id = ?");
+        $stmt = $pdo->prepare("SELECT parent, variety FROM Plants WHERE plant_id = ?");
         $stmt->execute([$plant_id]);
         $plant = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$plant) {
+        if ($plant) {
+            // Extract parent and variety from the result
+            $parentName = htmlspecialchars($plant['parent']);
+            $varietyName = htmlspecialchars($plant['variety']);
+        } else {
             $error = "Plant not found.";
         }
 
@@ -80,9 +86,15 @@ if (isset($_GET['id'])) {
   <?php include '../includes/menu.php'; ?>
     
     <div class="container mt-5">
-        <h1 id="parentName">Parent Plant Name</h1>
-        <h2 id="varietyName">Variety Name</h2>
-        <h3 id="plantType">Type</h3>
+        <!-- Check if there's an error, display it if exists -->
+        <?php if ($error): ?>
+            <div class="error-message"><?php echo htmlspecialchars($error); ?></div>
+        <?php else: ?>
+            <!-- Dynamically display the plant details -->
+            <h1 id="parentName"><?php echo htmlspecialchars($parentName); ?></h1>
+            <h2 id="varietyName"><?php echo htmlspecialchars($varietyName); ?></h2>
+            <h3 id="plantType">Type</h3>
+        <?php endif; ?>
 
         <div class="row mb-4">
             <div class="col-md-3 mb-3">
