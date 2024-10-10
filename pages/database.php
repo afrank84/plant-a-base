@@ -64,6 +64,9 @@ try {
                             <td><?php echo htmlspecialchars($plant['plant_id']); ?></td>
                             <td><?php echo htmlspecialchars($plant['Parent']); ?></td>
                             <td><?php echo htmlspecialchars($plant['Variety']); ?></td>
+                            <td>
+                                <a href="plant.php?id=<?php echo urlencode($plant['plant_id']); ?>" class="btn btn-primary btn-sm">View</a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
