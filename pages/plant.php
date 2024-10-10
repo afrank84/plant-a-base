@@ -7,6 +7,32 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
+
+$error = '';
+$plant = null;
+
+if (isset($_GET['id'])) {
+    $plant_id = $_GET['id'];
+
+    try {
+        $pdo = getConnection();
+
+        // Prepare and execute the query to get plant information
+        $stmt = $pdo->prepare("SELECT * FROM Plants WHERE plant_id = ?");
+        $stmt->execute([$plant_id]);
+        $plant = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$plant) {
+            $error = "Plant not found.";
+        }
+
+    } catch (PDOException $e) {
+        $error = "A database error occurred. Please try again later.";
+        error_log("Database error: " . $e->getMessage());
+    }
+} else {
+    $error = "No plant ID provided.";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
