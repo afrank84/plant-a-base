@@ -12,6 +12,7 @@ $error = '';
 $plant = null;
 $parentName = '';
 $varietyName = '';
+$typeName = '';
 
 if (isset($_GET['id'])) {
     $plant_id = $_GET['id'];
@@ -28,6 +29,7 @@ if (isset($_GET['id'])) {
             // Extract parent and variety from the result
             $parentName = htmlspecialchars($plant['parent']);
             $varietyName = htmlspecialchars($plant['variety']);
+            $typeName = htmlspecialchars($plant['type']);
         } else {
             $error = "Plant not found.";
         }
@@ -96,7 +98,7 @@ if (isset($_GET['id'])) {
             <!-- Dynamically display the plant details -->
             <h1 id="parentName"><?php echo htmlspecialchars($parentName); ?></h1>
             <h2 id="varietyName"><?php echo htmlspecialchars($varietyName); ?></h2>
-            <h3 id="plantType">Type</h3>
+            <h3 id="plantType"><?php echo htmlspecialchars($typeName); ?></h3>
         <?php endif; ?>
 
         <div class="row mb-4">
