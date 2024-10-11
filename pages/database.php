@@ -45,8 +45,19 @@ try {
         ?>
 
         <!-- Add search bar -->
-        <div class="mb-3">
-            <input type="text" id="searchInput" class="form-control" placeholder="Search plants...">
+        <div class="row mb-4">
+            <div class="col-md-6 mb-3">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search plants...">
+            </div>
+            <div class="col-md-6">
+                <div class="btn-group" role="group" aria-label="Filter options">
+                    <button type="button" class="btn btn-outline-primary">All</button>
+                    <button type="button" class="btn btn-outline-primary">Vegetables</button>
+                    <button type="button" class="btn btn-outline-primary">Fruits</button>
+                    <button type="button" class="btn btn-outline-primary">Herbs</button>
+                    <button type="button" class="btn btn-outline-primary">Flowers</button>
+                </div>
+            </div>
         </div>
 
         <?php if (!empty($plants)): ?>
