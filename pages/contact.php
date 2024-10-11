@@ -31,6 +31,15 @@
                         <input type="email" class="form-control" id="email" required>
                     </div>
                     <div class="mb-3">
+                        <label for="contactType" class="form-label">Contact Type</label>
+                        <select class="form-select" id="contactType" required>
+                            <option value="">Select an option</option>
+                            <option value="request">Request</option>
+                            <option value="issue">Issue</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label for="subject" class="form-label">Subject</label>
                         <input type="text" class="form-control" id="subject" required>
                     </div>
