@@ -5,12 +5,10 @@ $error = '';
 $issues = [];
 
 try {
-    // GitHub API URL for public repository issues
-    $owner = 'afrank84';  // GitHub repository owner
-    $repo = 'plant-a-base';    // GitHub repository name
+    $owner = 'afrank84';
+    $repo = 'plant-a-base';
     $url = "https://api.github.com/repos/$owner/$repo/issues";
 
-    // Create a stream context to set User-Agent (required by GitHub API)
     $options = [
         'http' => [
             'header' => "User-Agent: PHP\r\n"
@@ -18,12 +16,9 @@ try {
     ];
     $context = stream_context_create($options);
 
-    // Send the request
     $response = file_get_contents($url, false, $context);
 
-    // Check if the response is not false (i.e., successful)
     if ($response !== false) {
-        // Decode the JSON response into a PHP array
         $issues = json_decode($response, true);
     } else {
         $error = "Failed to fetch issues from GitHub.";
@@ -48,6 +43,9 @@ try {
             padding: 20px 0;
             margin-top: 40px;
         }
+        .table-hover tbody tr:hover {
+            background-color: #f5f5f5;
+        }
     </style>
 </head>
 <body>
@@ -61,25 +59,40 @@ try {
         }
         ?>
 
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <?php
-                if (!empty($issues)) {
-                    foreach ($issues as $issue) {
-                        echo "<div class='card mb-3'>";
-                        echo "<div class='card-header'><h4>" . htmlspecialchars($issue['title']) . "</h4></div>";
-                        echo "<div class='card-body'>";
-                        echo "<p>" . htmlspecialchars($issue['body']) . "</p>";
-                        echo "<p><strong>State:</strong> " . htmlspecialchars($issue['state']) . "</p>";
-                        echo "<p><a href='" . htmlspecialchars($issue['html_url']) . "' target='_blank'>View Issue on GitHub</a></p>";
-                        echo "</div></div>";
-                    }
-                } else {
-                    echo "<div class='alert alert-info'>No issues found.</div>";
-                }
-                ?>
-            </div>
-        </div>
+        <?php if (!empty($issues)): ?>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>State</th>
+                        <th>Created At</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($issues as $issue): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($issue['number']); ?></td>
+                            <td><?php echo htmlspecialchars($issue['title']); ?></td>
+                            <td>
+                                <span class="badge <?php echo $issue['state'] === 'open' ? 'bg-success' : 'bg-danger'; ?>">
+                                    <?php echo htmlspecialchars($issue['state']); ?>
+                                </span>
+                            </td>
+                            <td><?php echo date('Y-m-d', strtotime($issue['created_at'])); ?></td>
+                            <td>
+                                <a href="<?php echo htmlspecialchars($issue['html_url']); ?>" target="_blank" class="btn btn-sm btn-primary">
+                                    View on GitHub
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else: ?>
+            <div class="alert alert-info">No issues found.</div>
+        <?php endif; ?>
     </div>
     <?php include '../includes/footer.php'; ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
