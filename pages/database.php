@@ -51,11 +51,10 @@ try {
             </div>
             <div class="col-md-6">
                 <div class="btn-group" role="group" aria-label="Filter options">
-                    <button type="button" class="btn btn-outline-primary">All</button>
-                    <button type="button" class="btn btn-outline-primary">Vegetables</button>
-                    <button type="button" class="btn btn-outline-primary">Fruits</button>
-                    <button type="button" class="btn btn-outline-primary">Herbs</button>
-                    <button type="button" class="btn btn-outline-primary">Flowers</button>
+                    <button type="button" class="btn btn-outline-primary active" data-filter="all">All</button>
+                    <?php foreach ($types as $type): ?>
+                        <button type="button" class="btn btn-outline-primary" data-filter="<?php echo htmlspecialchars($type); ?>"><?php echo htmlspecialchars($type); ?></button>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
@@ -99,25 +98,42 @@ try {
             const searchInput = document.getElementById('searchInput');
             const table = document.getElementById('plantsTable');
             const rows = table.getElementsByTagName('tr');
+            const filterButtons = document.querySelectorAll('.btn-group button');
 
-            searchInput.addEventListener('keyup', function() {
+            let currentFilter = 'all';
+
+            function filterTable() {
                 const searchTerm = searchInput.value.toLowerCase();
 
                 for (let i = 1; i < rows.length; i++) {
                     const row = rows[i];
                     const cells = row.getElementsByTagName('td');
+                    const type = row.getAttribute('data-type');
                     let found = false;
 
-                    for (let j = 0; j < cells.length; j++) {
-                        const cellText = cells[j].textContent.toLowerCase();
-                        if (cellText.includes(searchTerm)) {
-                            found = true;
-                            break;
+                    if (currentFilter === 'all' || type === currentFilter) {
+                        for (let j = 0; j < cells.length; j++) {
+                            const cellText = cells[j].textContent.toLowerCase();
+                            if (cellText.includes(searchTerm)) {
+                                found = true;
+                                break;
+                            }
                         }
                     }
 
                     row.style.display = found ? '' : 'none';
                 }
+            }
+
+            searchInput.addEventListener('keyup', filterTable);
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.getAttribute('data-filter');
+                    filterTable();
+                });
             });
         });
     </script>
