@@ -6,8 +6,8 @@ $issues = [];
 
 try {
     // GitHub API URL for public repository issues
-    $owner = 'repository_owner';  // GitHub repository owner
-    $repo = 'repository_name';    // GitHub repository name
+    $owner = 'afrank84';  // GitHub repository owner
+    $repo = 'plant-a-base';    // GitHub repository name
     $url = "https://api.github.com/repos/$owner/$repo/issues";
 
     // Create a stream context to set User-Agent (required by GitHub API)
@@ -51,7 +51,7 @@ try {
     </style>
 </head>
 <body>
-    <div id="menu-placeholder"></div>
+    <?php include '../includes/menu.php'; ?>
     <div class="container mt-5">
         <h1 class="text-center mb-5">GitHub Issues</h1>
 
@@ -81,13 +81,7 @@ try {
             </div>
         </div>
     </div>
-    <footer class="footer">
-        <div class="container">
-            <p class="text-muted text-center">&copy; 2024 Plant-a-base. All rights reserved.</p>
-        </div>
-    </footer>
-    <script src="../js/menu.js"></script>
-    <script src="../js/footer.js"></script>
+    <?php include '../includes/footer.php'; ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
