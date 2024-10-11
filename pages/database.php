@@ -15,7 +15,7 @@ try {
     $pdo = getConnection();
 
     // Prepare and execute the query to get plants from the database
-    $stmt = $pdo->prepare("SELECT plant_id, Parent, Variety, type, FROM Plants ORDER BY Parent ASC, Variety ASC");
+    $stmt = $pdo->prepare("SELECT plant_id, Parent, Variety, type FROM Plants ORDER BY Parent ASC, Variety ASC");
     $stmt->execute();
     $plants = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
