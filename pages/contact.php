@@ -15,7 +15,7 @@
     </style>
 </head>
 <body>
-    <div id="menu-placeholder"></div>
+    <?php include '../includes/menu.php'; ?>
     <div class="container mt-5">
         <h1 class="text-center mb-5">Contact Us</h1>
         
@@ -44,8 +44,7 @@
         </div>
     </div>
     
-    <script src="js/menu.js"></script>
-    <script src="js/footer.js"></script>
+    <?php include '../includes/footer.php'; ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
