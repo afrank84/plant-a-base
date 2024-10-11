@@ -10,9 +10,14 @@ if (!isset($_SESSION['user_id'])) {
 
 $error = '';
 $plants = [];
+$types = [];
 
 try {
     $pdo = getConnection();
+
+    // Fetch all plant types
+    $typeStmt = $pdo->query("SELECT DISTINCT type FROM Plants ORDER BY type");
+    $types = $typeStmt->fetchAll(PDO::FETCH_COLUMN);
 
     // Prepare and execute the query to get plants from the database
     $stmt = $pdo->prepare("SELECT plant_id, Parent, Variety, type FROM Plants ORDER BY Parent ASC, Variety ASC");
