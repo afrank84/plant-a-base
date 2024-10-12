@@ -16,7 +16,7 @@ try {
     $pdo = getConnection();
 
     // Fetch all plant types
-    $typeStmt = $pdo->query("SELECT DISTINCT type FROM Plants ORDER BY type");
+    $typeStmt = $pdo->query("SELECT type FROM Plants ORDER BY parent");
     $types = $typeStmt->fetchAll(PDO::FETCH_COLUMN);
 
     // Prepare and execute the query to get plants from the database
