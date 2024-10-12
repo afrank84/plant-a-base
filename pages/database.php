@@ -10,14 +10,9 @@ if (!isset($_SESSION['user_id'])) {
 
 $error = '';
 $plants = [];
-$types = [];
 
 try {
     $pdo = getConnection();
-
-    // Fetch all plant types
-    $typeStmt = $pdo->query("SELECT type FROM Plants ORDER BY parent");
-    $types = $typeStmt->fetchAll(PDO::FETCH_COLUMN);
 
     // Prepare and execute the query to get plants from the database
     $stmt = $pdo->prepare("SELECT plant_id, Parent, Variety, type FROM Plants ORDER BY Parent ASC, Variety ASC");
@@ -50,18 +45,8 @@ try {
         ?>
 
         <!-- Add search bar -->
-        <div class="row mb-4">
-            <div class="col-md-6 mb-3">
-                <input type="text" id="searchInput" class="form-control" placeholder="Search plants...">
-            </div>
-            <div class="col-md-6">
-                <div class="btn-group" role="group" aria-label="Filter options">
-                    <button type="button" class="btn btn-outline-primary active" data-filter="all">All</button>
-                    <?php foreach ($types as $type): ?>
-                        <button type="button" class="btn btn-outline-primary" data-filter="<?php echo htmlspecialchars($type); ?>"><?php echo htmlspecialchars($type); ?></button>
-                    <?php endforeach; ?>
-                </div>
-            </div>
+        <div class="mb-3">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search plants...">
         </div>
 
         <?php if (!empty($plants)): ?>
@@ -103,42 +88,25 @@ try {
             const searchInput = document.getElementById('searchInput');
             const table = document.getElementById('plantsTable');
             const rows = table.getElementsByTagName('tr');
-            const filterButtons = document.querySelectorAll('.btn-group button');
 
-            let currentFilter = 'all';
-
-            function filterTable() {
+            searchInput.addEventListener('keyup', function() {
                 const searchTerm = searchInput.value.toLowerCase();
 
                 for (let i = 1; i < rows.length; i++) {
                     const row = rows[i];
                     const cells = row.getElementsByTagName('td');
-                    const type = row.getAttribute('data-type');
                     let found = false;
 
-                    if (currentFilter === 'all' || type === currentFilter) {
-                        for (let j = 0; j < cells.length; j++) {
-                            const cellText = cells[j].textContent.toLowerCase();
-                            if (cellText.includes(searchTerm)) {
-                                found = true;
-                                break;
-                            }
+                    for (let j = 0; j < cells.length; j++) {
+                        const cellText = cells[j].textContent.toLowerCase();
+                        if (cellText.includes(searchTerm)) {
+                            found = true;
+                            break;
                         }
                     }
 
                     row.style.display = found ? '' : 'none';
                 }
-            }
-
-            searchInput.addEventListener('keyup', filterTable);
-
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-                    currentFilter = this.getAttribute('data-filter');
-                    filterTable();
-                });
             });
         });
     </script>
