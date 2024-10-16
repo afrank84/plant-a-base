@@ -45,7 +45,7 @@
     </style>
 </head>
 <body>
-    <div id="menu-placeholder"></div>
+    <?php include '../includes/menu.php'; ?>
     
     <div class="container mt-5">
         <form id="plantForm">
@@ -174,13 +174,8 @@
         </form>
     </div>
 
-    <footer class="footer">
-        <div class="container">
-            <p class="text-muted text-center">&copy; 2024 Plant-a-base. All rights reserved.</p>
-        </div>
-    </footer>
-    <script src="js/menu.js"></script>
-    <script src="js/footer.js"></script>
+    <?php include '../includes/footer.php'; ?>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
         // Add JavaScript to handle form submission and image uploads
