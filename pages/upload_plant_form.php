@@ -67,8 +67,12 @@ if (!isset($_SESSION['user_id'])) {
                 // Fetch plants from the database and populate options
                 $sql = "SELECT plant_id, parent, variety FROM Plants ORDER BY parent, variety";
                 $result = $conn->query($sql);
-                while ($row = $result->fetch_assoc()) {
-                    echo "<option value='" . $row['plant_id'] . "'>" . $row['parent'] . " - " . $row['variety'] . "</option>";
+                if ($result && $result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<option value='" . $row['plant_id'] . "'>" . $row['parent'] . " - " . $row['variety'] . "</option>";
+                    }
+                } else {
+                    echo "<option disabled>No plants found</option>";
                 }
                 ?>
             </select>
