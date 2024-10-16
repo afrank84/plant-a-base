@@ -48,7 +48,7 @@
     <?php include '../includes/menu.php'; ?>
     
     <div class="container mt-5">
-        <form id="plantForm">
+        <form action="process_plant_form.php" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="parentName" class="form-label">Parent Plant Name</label>
                 <input type="text" class="form-control" id="parentName" name="parentName" required>
