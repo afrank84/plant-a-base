@@ -73,7 +73,8 @@ if (!isset($_SESSION['user_id'])) {
                 ?>
             </select>
         </div>
-        <form action="process_plant_form.php" method="POST" enctype="multipart/form-data">
+        <form id="plantForm" action="process_plant_form.php" method="POST" enctype="multipart/form-data">
+            <input type="hidden" id="plant_id" name="plant_id" value="">
             <div class="mb-3">
                 <label for="parentName" class="form-label">Parent Plant Name</label>
                 <input type="text" class="form-control" id="parentName" name="parentName" required>
@@ -203,13 +204,46 @@ if (!isset($_SESSION['user_id'])) {
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Add JavaScript to handle form submission and image uploads
-        document.getElementById('plantForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Here you would typically send the form data to a server
-            console.log('Form submitted');
-        });
-
+        function populateForm(plantId) {
+            if (!plantId) {
+                document.getElementById('plantForm').reset();
+                return;
+            }
+    
+            fetch(`process_plant_form.php?plant_id=${plantId}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('plant_id').value = data.plant_id;
+                    document.getElementById('parentName').value = data.parent;
+                    document.getElementById('varietyName').value = data.variety;
+                    document.getElementById('plantType').value = data.type;
+                    document.getElementById('dtg').value = data.dtg;
+                    document.getElementById('dth').value = data.dth;
+                    document.getElementById('zone').value = data.zone;
+                    document.getElementById('sowDepth').value = data.depth_to_sow;
+                    document.getElementById('seedSpacing').value = data.seed_spacing;
+                    document.getElementById('plantDescription').value = data.notes_directions;
+    
+                    // Populate growing seasons
+                    for (let i = 1; i <= 12; i++) {
+                        document.querySelector(`input[name="month[]"][value="${getMonthName(i)}"]`).checked = data[`growing_season_${i}`] == 1;
+                    }
+    
+                    // Set image previews
+                    document.getElementById('seedImg').src = data.img_seed_filename ? `../uploads/${data.img_seed_filename}` : 'https://placehold.co/300';
+                    document.getElementById('plantImg').src = data.img_plant_filename ? `../uploads/${data.img_plant_filename}` : 'https://placehold.co/300';
+                    document.getElementById('flowerImg').src = data.img_flower_filename ? `../uploads/${data.img_flower_filename}` : 'https://placehold.co/300';
+                    document.getElementById('fruitImg').src = data.img_fruit_yield ? `../uploads/${data.img_fruit_yield}` : 'https://placehold.co/300';
+                    document.getElementById('descriptionImg').src = data.img_customer_filename ? `../uploads/${data.img_customer_filename}` : 'https://placehold.co/500x300';
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    
+        function getMonthName(monthNumber) {
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            return months[monthNumber - 1];
+        }
+    
         function handleImageUpload(inputId, imgId) {
             document.getElementById(inputId).addEventListener('change', function(e) {
                 const file = e.target.files[0];
@@ -222,12 +256,33 @@ if (!isset($_SESSION['user_id'])) {
                 }
             });
         }
-
+    
         handleImageUpload('seedImgUpload', 'seedImg');
         handleImageUpload('plantImgUpload', 'plantImg');
         handleImageUpload('flowerImgUpload', 'flowerImg');
         handleImageUpload('fruitImgUpload', 'fruitImg');
         handleImageUpload('descriptionImgUpload', 'descriptionImg');
+    
+        // Form submission handling
+        document.getElementById('plantForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            fetch('process_plant_form.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    // Optionally reset form or redirect
+                    // location.reload(); // Uncomment this if you want to reload the page after successful submission
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
     </script>
 </body>
 </html>
