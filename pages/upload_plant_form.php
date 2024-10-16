@@ -1,3 +1,14 @@
+<?php
+session_start();
+require_once '../includes/db_connection.php';
+
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    // Redirect to login page if not logged in
+    header("Location: login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,6 +59,20 @@
     <?php include '../includes/menu.php'; ?>
     
     <div class="container mt-5">
+        <div class="mb-3">
+            <label for="plantSelector" class="form-label">Select Plant to Edit</label>
+            <select id="plantSelector" class="form-select" onchange="populateForm(this.value)">
+                <option value="">Select a plant</option>
+                <?php
+                // Fetch plants from the database and populate options
+                $sql = "SELECT plant_id, parent, variety FROM Plants ORDER BY parent, variety";
+                $result = $conn->query($sql);
+                while ($row = $result->fetch_assoc()) {
+                    echo "<option value='" . $row['plant_id'] . "'>" . $row['parent'] . " - " . $row['variety'] . "</option>";
+                }
+                ?>
+            </select>
+        </div>
         <form action="process_plant_form.php" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="parentName" class="form-label">Parent Plant Name</label>
