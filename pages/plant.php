@@ -21,15 +21,15 @@ if (isset($_GET['id'])) {
         $pdo = getConnection();
 
         // Prepare and execute the query to get plant information
-        $stmt = $pdo->prepare("SELECT parent, variety FROM Plants WHERE plant_id = ?");
+        $stmt = $pdo->prepare("SELECT parent_name, variety_name FROM plants WHERE plant_id = ?");
         $stmt->execute([$plant_id]);
         $plant = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($plant) {
             // Extract parent and variety from the result
-            $parentName = htmlspecialchars($plant['parent']);
-            $varietyName = htmlspecialchars($plant['variety']);
-            $typeName = htmlspecialchars($plant['type']);
+            $parentName = htmlspecialchars($plant['parent_name']);
+            $varietyName = htmlspecialchars($plant['variety_name']);
+            $typeName = htmlspecialchars($_GET['type'] ?? 'Type: Not defined');
         } else {
             $error = "Plant not found.";
         }
