@@ -68,6 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plant Events - View Records</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <script>
         function hideAlert() {
             const alerts = document.querySelectorAll('.alert');
@@ -117,9 +118,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo '<td><input type="text" class="form-control" name="event_notes" value="' . htmlspecialchars($event['event_notes']) . '"></td>';
                 echo '<td>';
                 echo '<input type="hidden" name="update_index" value="' . $index . '">';
-                echo '<button type="submit" class="btn btn-success btn-sm">Save</button> ';
-                echo '<button type="submit" name="delete_index" value="' . $index . '" class="btn btn-danger btn-sm">Delete</button> ';
-                echo '<a href="view_events.php" class="btn btn-secondary btn-sm">Cancel</a>';
+                echo '<button type="submit" class="btn btn-success btn-sm"><i class="fas fa-save"></i></button> ';
+                echo '<button type="submit" name="delete_index" value="' . $index . '" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button> ';
+                echo '<a href="view_events.php" class="btn btn-primary btn-sm"><i class="fas fa-sync-alt"></i></a>';
                 echo '</td>';
                 echo '</form>';
                 echo '</tr>';
@@ -134,5 +135,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php include '../includes/footer.php'; ?>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
 </body>
 </html>
