@@ -18,7 +18,7 @@ if (file_exists($jsonFilePath)) {
     $error = "No event records found.";
 }
 
-// Handle update and delete requests
+// Handle update, delete, and add requests
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['delete_index'])) {
         $index = (int)$_POST['delete_index'];
@@ -58,6 +58,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $error = "Event not found.";
         }
+    } elseif (isset($_POST['add_event'])) {
+        $newEvent = [
+            'plant_id' => $_POST['plant_id'],
+            'event_title' => $_POST['event_title'],
+            'event_date' => $_POST['event_date'],
+            'event_notes' => $_POST['event_notes']
+        ];
+
+        // Add the new event to the array
+        $events[] = $newEvent;
+
+        // Save back to the JSON file
+        if (file_put_contents($jsonFilePath, json_encode($events, JSON_PRETTY_PRINT))) {
+            $successMessage = "New event added successfully.";
+        } else {
+            $error = "Failed to add new event.";
+        }
     }
 }
 ?>
@@ -94,7 +111,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!empty($error)) {
             echo "<div class='alert alert-danger'>" . htmlspecialchars($error) . "</div>";
         }
+        ?>
 
+        <!-- Add New Event Form -->
+        <div class="card mb-4">
+            <div class="card-header">Add New Event</div>
+            <div class="card-body">
+                <form method="POST" action="view_events.php">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <input type="text" class="form-control" name="plant_id" placeholder="Plant ID" required>
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" name="event_title" placeholder="Event Title" required>
+                        </div>
+                        <div class="col">
+                            <input type="date" class="form-control" name="event_date" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <textarea class="form-control" name="event_notes" placeholder="Event Notes"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" name="add_event" class="btn btn-primary">Add Event</button>
+                </form>
+            </div>
+        </div>
+
+        <?php
         if (!empty($events)) {
             echo '<table class="table table-bordered table-striped">';
             echo '<thead>

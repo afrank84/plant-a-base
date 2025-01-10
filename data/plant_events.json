@@ -16,5 +16,11 @@
         "event_title": "Watering",
         "event_date": "2025-01-10",
         "event_notes": "This is some text"
+    },
+    {
+        "plant_id": "4",
+        "event_title": "Watering",
+        "event_date": "2025-01-21",
+        "event_notes": "Testing"
     }
 ]
