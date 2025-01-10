@@ -67,8 +67,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plant Events - View Records</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        function hideAlert() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                setTimeout(() => {
+                    alert.style.display = 'none';
+                }, 3000);
+            });
+        }
+    </script>
 </head>
-<body>
+<body onload="hideAlert()">
     <?php include '../includes/menu.php'; ?>
 
     <div class="container mt-5">
