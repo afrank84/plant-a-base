@@ -10,6 +10,24 @@ if (!isset($_SESSION['user_id'])) {
 
 $error = '';
 $plants = [];
+$plantsWithRecords = [];
+
+// Get the user-specific JSON file
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+    $jsonFilePath = "../data/{$user_id}.json";
+
+    if (file_exists($jsonFilePath)) {
+        $jsonContent = file_get_contents($jsonFilePath);
+        $allRecords = json_decode($jsonContent, true) ?? [];
+
+        // Extract unique plant IDs from records
+        foreach ($allRecords as $record) {
+            $plantsWithRecords[] = $record['plant_id'];
+        }
+        $plantsWithRecords = array_unique($plantsWithRecords);
+    }
+}
 
 try {
     $pdo = getConnection();
@@ -31,6 +49,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plants List - Plant-a-base</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <?php include '../includes/menu.php'; ?>
@@ -57,6 +76,7 @@ try {
                         <th>Parent</th>
                         <th>Variety</th>
                         <th>Type</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,7 +87,12 @@ try {
                             <td><?php echo htmlspecialchars($plant['variety_name']); ?></td>
                             <td><?php echo htmlspecialchars($plant['type']); ?></td>
                             <td>
-                                <a href="plant.php?id=<?php echo urlencode($plant['plant_id']); ?>" class="btn btn-primary btn-sm">View</a>
+                                <a href="plant.php?id=<?php echo urlencode($plant['plant_id']); ?>" class="btn btn-primary btn-sm">
+                                    View
+                                    <?php if (in_array($plant['plant_id'], $plantsWithRecords)): ?>
+                                        <i class="fas fa-clipboard"></i>
+                                    <?php endif; ?>
+                                </a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
