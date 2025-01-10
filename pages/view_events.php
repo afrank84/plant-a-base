@@ -18,10 +18,26 @@ if (file_exists($jsonFilePath)) {
     $error = "No event records found.";
 }
 
-// Handle update request
+// Handle update and delete requests
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['update_index'])) {
-        $index = $_POST['update_index'];
+    if (isset($_POST['delete_index'])) {
+        $index = (int)$_POST['delete_index'];
+
+        // Delete the event from the array
+        if (isset($events[$index])) {
+            array_splice($events, $index, 1);
+
+            // Save back to the JSON file
+            if (file_put_contents($jsonFilePath, json_encode($events, JSON_PRETTY_PRINT))) {
+                $successMessage = "Event was successfully deleted.";
+            } else {
+                $error = "Failed to delete event.";
+            }
+        } else {
+            $error = "Event not found.";
+        }
+    } elseif (isset($_POST['update_index'])) {
+        $index = (int)$_POST['update_index'];
         $updatedEvent = [
             'plant_id' => $_POST['plant_id'],
             'event_title' => $_POST['event_title'],
@@ -32,27 +48,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Update the event in the array
         if (isset($events[$index])) {
             $events[$index] = $updatedEvent;
-            
+
             // Save back to the JSON file
             if (file_put_contents($jsonFilePath, json_encode($events, JSON_PRETTY_PRINT))) {
                 $successMessage = "Event updated successfully.";
             } else {
                 $error = "Failed to save updated event.";
-            }
-        } else {
-            $error = "Event not found.";
-        }
-    } elseif (isset($_POST['delete_index'])) {
-        $index = $_POST['delete_index'];
-        // Delete the event from the array
-        if (isset($events[$index])) {
-            array_splice($events, $index, 1);
-            
-            // Save back to the JSON file
-            if (file_put_contents($jsonFilePath, json_encode($events, JSON_PRETTY_PRINT))) {
-                $successMessage = "Event deleted successfully.";
-            } else {
-                $error = "Failed to delete event.";
             }
         } else {
             $error = "Event not found.";
