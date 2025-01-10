@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $pdo = getConnection();
             
             // Check if email or username already exists
-            $stmt = $pdo->prepare("SELECT * FROM Users WHERE email = ? OR username = ?");
+            $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ? OR username = ?");
             $stmt->execute([$email, $username]);
             
             if ($stmt->rowCount() > 0) {
@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
                 
                 // Insert new user
-                $stmt = $pdo->prepare("INSERT INTO Users (username, email, password_hash) VALUES (?, ?, ?)");
+                $stmt = $pdo->prepare("INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)");
                 if ($stmt->execute([$username, $email, $hashed_password])) {
                     $userId = $pdo->lastInsertId();
                     $success = "Registration successful! Your user ID is: " . $userId;
@@ -103,13 +103,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </div>
-    <footer class="footer">
-        <div class="container">
-            <p class="text-muted text-center">&copy; 2024 Plant-a-base. All rights reserved.</p>
-        </div>
-    </footer>
+    <?php include('../includes/footer.php'); ?>
     <script src="../js/menu.js"></script>
-    <script src="../js/footer.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
