@@ -22,5 +22,11 @@
         "event_title": "Watering",
         "event_date": "2025-01-21",
         "event_notes": "Testing"
+    },
+    {
+        "plant_id": "10",
+        "event_title": "Watering",
+        "event_date": "2025-01-14",
+        "event_notes": "testing"
     }
 ]

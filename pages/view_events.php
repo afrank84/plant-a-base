@@ -1,13 +1,24 @@
 <?php
-// Define the JSON file path
-$jsonFilePath = '../data/plant_events.json';
+session_start();
+
+// Redirect if not logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Get the logged-in user's ID
+$user_id = $_SESSION['user_id'];
+
+// Define the user-specific JSON file path
+$jsonFilePath = "../data/{$user_id}.json";
 
 // Initialize variables
 $events = [];
 $error = '';
 $successMessage = '';
 
-// Read the JSON file
+// Read the user-specific JSON file
 if (file_exists($jsonFilePath)) {
     $jsonContent = file_get_contents($jsonFilePath);
     $events = json_decode($jsonContent, true);
@@ -15,7 +26,7 @@ if (file_exists($jsonFilePath)) {
         $error = "Failed to decode JSON. Please check the file format.";
     }
 } else {
-    $error = "No event records found.";
+    $error = "No event records found for your account.";
 }
 
 // Handle update, delete, and add requests
@@ -78,6 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

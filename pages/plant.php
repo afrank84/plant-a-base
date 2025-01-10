@@ -13,6 +13,20 @@ $plant = null;
 $parentName = '';
 $varietyName = '';
 $typeName = '';
+$records = [];
+
+// Get the user-specific JSON file
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+    $jsonFilePath = "../data/{$user_id}.json";
+
+    if (file_exists($jsonFilePath)) {
+        $jsonContent = file_get_contents($jsonFilePath);
+        $allRecords = json_decode($jsonContent, true) ?? [];
+    } else {
+        $allRecords = [];
+    }
+}
 
 if (isset($_GET['id'])) {
     $plant_id = $_GET['id'];
@@ -30,6 +44,13 @@ if (isset($_GET['id'])) {
             $parentName = htmlspecialchars($plant['parent_name']);
             $varietyName = htmlspecialchars($plant['variety_name']);
             $typeName = htmlspecialchars($_GET['type'] ?? 'Type: Not defined');
+            
+            // Filter the records for this specific plant_id
+            foreach ($allRecords as $record) {
+                if ($record['plant_id'] == $plant_id) {
+                    $records[] = $record;
+                }
+            }
         } else {
             $error = "Plant not found.";
         }
@@ -90,7 +111,7 @@ if (isset($_GET['id'])) {
     <div class="container mt-5">
         <!-- Check if there's an error, display it if exists -->
         <?php if ($error): ?>
-            <div class="error-message"><?php echo htmlspecialchars($error); ?></div>
+            <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
             <h1 id="parentName">Parent</h1>
             <h2 id="varietyName">Variety</h2>
             <h3 id="plantType">Type</h3>
@@ -203,7 +224,34 @@ if (isset($_GET['id'])) {
                 </tr>
             </tbody>
         </table>
-       
+
+        <!-- Display records for this plant -->
+        <?php if (!empty($records)): ?>
+            <h4 class="mt-5">Records for <?php echo htmlspecialchars($parentName . ' ' . $varietyName); ?></h4>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Event Title</th>
+                        <th>Event Date</th>
+                        <th>Event Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($records as $index => $record): ?>
+                        <tr>
+                            <td><?php echo $index + 1; ?></td>
+                            <td><?php echo htmlspecialchars($record['event_title']); ?></td>
+                            <td><?php echo htmlspecialchars($record['event_date']); ?></td>
+                            <td><?php echo htmlspecialchars($record['event_notes']); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else: ?>
+            <p class="mt-5">No records found for this plant.</p>
+        <?php endif; ?>
+
     </div>
 
     <?php include '../includes/footer.php'; ?>

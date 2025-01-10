@@ -1,0 +1,14 @@
+[
+    {
+        "plant_id": "4",
+        "event_title": "Watering",
+        "event_date": "2025-01-20",
+        "event_notes": "This is a new event"
+    },
+    {
+        "plant_id": "4",
+        "event_title": "Watering",
+        "event_date": "2024-12-31",
+        "event_notes": "Blah"
+    }
+]

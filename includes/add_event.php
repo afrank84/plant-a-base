@@ -7,8 +7,11 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-// Define the JSON file path
-$jsonFilePath = '../data/plant_events.json';
+// Get the logged-in user's ID
+$user_id = $_SESSION['user_id'];
+
+// Define the user-specific JSON file path
+$jsonFilePath = "../data/{$user_id}.json";
 
 // Initialize an error message
 $error = '';
