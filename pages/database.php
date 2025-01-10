@@ -15,7 +15,7 @@ try {
     $pdo = getConnection();
 
     // Prepare and execute the query to get plants from the database
-    $stmt = $pdo->prepare("SELECT plant_id, Parent, Variety, type FROM Plants ORDER BY Parent ASC, Variety ASC");
+    $stmt = $pdo->prepare("SELECT plant_id, parent_name, variety_name, type FROM plants ORDER BY parent_name ASC, variety_name ASC");
     $stmt->execute();
     $plants = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -63,8 +63,8 @@ try {
                     <?php foreach ($plants as $plant): ?>
                         <tr>
                             <td><?php echo htmlspecialchars($plant['plant_id']); ?></td>
-                            <td><?php echo htmlspecialchars($plant['Parent']); ?></td>
-                            <td><?php echo htmlspecialchars($plant['Variety']); ?></td>
+                            <td><?php echo htmlspecialchars($plant['parent_name']); ?></td>
+                            <td><?php echo htmlspecialchars($plant['variety_name']); ?></td>
                             <td><?php echo htmlspecialchars($plant['type']); ?></td>
                             <td>
                                 <a href="plant.php?id=<?php echo urlencode($plant['plant_id']); ?>" class="btn btn-primary btn-sm">View</a>
