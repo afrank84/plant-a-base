@@ -22,5 +22,11 @@
         "event_title": "Killed plant",
         "event_date": "2025-01-16",
         "event_notes": "It just died.."
+    },
+    {
+        "plant_id": "115",
+        "event_title": "Freeze",
+        "event_date": "2025-01-10",
+        "event_notes": "Everything and everyone I loved died. "
     }
 ]

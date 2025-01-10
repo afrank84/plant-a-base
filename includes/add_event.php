@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Save back to the JSON file
         if (file_put_contents($jsonFilePath, json_encode($events, JSON_PRETTY_PRINT))) {
-            header("Location: ../includes/view_events.php"); // Redirect to a success page or confirmation message
+            header("Location: ../pages/view_events.php"); // Redirect to a success page or confirmation message
             exit();
         } else {
             $error = "Failed to save event to JSON file.";
