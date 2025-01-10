@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $pdo = getConnection();
             
             // Optimized query to fetch user data including profile picture
-            $stmt = $pdo->prepare("SELECT user_id, username, password_hash, profile_picture FROM Users WHERE email = ?");
+            $stmt = $pdo->prepare("SELECT user_id, username, password_hash, profile_picture FROM users WHERE email = ?");
             $stmt->execute([$email]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
             
