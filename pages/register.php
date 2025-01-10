@@ -11,11 +11,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $confirm_password = $_POST['confirm-password'];
 
     if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
-        $error = "All fields are required.";
+        $error = "Please ensure all fields are filled in.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error = "Invalid email format.";
+        $error = "The email address provided is not valid. Please check and try again.";
     } elseif ($password !== $confirm_password) {
-        $error = "Passwords do not match.";
+        $error = "The passwords you entered do not match. Please try again.";
     } else {
         try {
             $pdo = getConnection();
@@ -25,28 +25,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->execute([$email, $username]);
             
             if ($stmt->rowCount() > 0) {
-                $error = "Email or username already exists.";
+                $error = "The username or email address is already in use. Please choose another.";
             } else {
-                // Hash the password
-                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-                
                 // Insert new user
-                $stmt = $pdo->prepare("INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)");
+                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
                 if ($stmt->execute([$username, $email, $hashed_password])) {
-                    $userId = $pdo->lastInsertId();
-                    $success = "Registration successful! Your user ID is: " . $userId;
+                    $success = "Registration successful! You can now log in.";
                 } else {
-                    $error = "An error occurred while registering the user.";
-                    error_log("Failed to insert user: " . implode(", ", $stmt->errorInfo()));
+                    $error = "An unexpected error occurred while creating your account. Please try again later.";
                 }
             }
         } catch (PDOException $e) {
-            $error = "A database error occurred. Please try again later.";
-            error_log("Database error: " . $e->getMessage());
+            $error = "A database error occurred: " . $e->getMessage();
+            // For production: log the error instead of showing it
         }
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
