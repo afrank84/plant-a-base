@@ -34,9 +34,16 @@ $profile_picture_url = isset($_SESSION['profile_picture']) && !empty($_SESSION['
                     <a class="nav-link <?php echo is_active('plant.php'); ?>" href="plant.php">Template</a>
                 </li>
                 <?php if (isset($_SESSION['user_id'])): ?>
-                <li class="nav-item">
-                    <a class="nav-link <?php echo is_active('user_dashboard.php'); ?>" href="user_dashboard.php">Dashboard</a>
-                </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle <?php echo is_active('user_dashboard.php'); ?>" href="user_dashboard.php" id="dashboardDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            My Plants
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dashboardDropdown">
+                            <li><a class="dropdown-item" href="user_dashboard.php">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="view_events.php">Plant Events</a></li>
+                            <li><a class="dropdown-item" href="#">Plants</a></li>
+                        </ul>
+                    </li>
                 <?php endif; ?>
                 <li class="nav-item">
                     <a class="nav-link <?php echo is_active('contact.php'); ?>" href="contact.php">Contact</a>
