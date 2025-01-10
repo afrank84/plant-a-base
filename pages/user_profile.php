@@ -18,8 +18,8 @@ $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // Fetch available zones
-$stmt = $pdo->query("SELECT zone FROM Zones ORDER BY zone");
-$zones = $stmt->fetchAll(PDO::FETCH_COLUMN);
+//$stmt = $pdo->query("SELECT zone FROM Zones ORDER BY zone");
+//$zones = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
