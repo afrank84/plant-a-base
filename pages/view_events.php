@@ -5,6 +5,7 @@ $jsonFilePath = '../data/plant_events.json';
 // Initialize variables
 $events = [];
 $error = '';
+$successMessage = '';
 
 // Read the JSON file
 if (file_exists($jsonFilePath)) {
@@ -18,28 +19,44 @@ if (file_exists($jsonFilePath)) {
 }
 
 // Handle update request
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_index'])) {
-    $index = $_POST['update_index'];
-    $updatedEvent = [
-        'plant_id' => $_POST['plant_id'],
-        'event_title' => $_POST['event_title'],
-        'event_date' => $_POST['event_date'],
-        'event_notes' => $_POST['event_notes']
-    ];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['update_index'])) {
+        $index = $_POST['update_index'];
+        $updatedEvent = [
+            'plant_id' => $_POST['plant_id'],
+            'event_title' => $_POST['event_title'],
+            'event_date' => $_POST['event_date'],
+            'event_notes' => $_POST['event_notes']
+        ];
 
-    // Update the event in the array
-    if (isset($events[$index])) {
-        $events[$index] = $updatedEvent;
-        
-        // Save back to the JSON file
-        if (file_put_contents($jsonFilePath, json_encode($events, JSON_PRETTY_PRINT))) {
-            header("Location: view_events.php"); // Redirect to avoid resubmission
-            exit();
+        // Update the event in the array
+        if (isset($events[$index])) {
+            $events[$index] = $updatedEvent;
+            
+            // Save back to the JSON file
+            if (file_put_contents($jsonFilePath, json_encode($events, JSON_PRETTY_PRINT))) {
+                $successMessage = "Event updated successfully.";
+            } else {
+                $error = "Failed to save updated event.";
+            }
         } else {
-            $error = "Failed to save updated event.";
+            $error = "Event not found.";
         }
-    } else {
-        $error = "Event not found.";
+    } elseif (isset($_POST['delete_index'])) {
+        $index = $_POST['delete_index'];
+        // Delete the event from the array
+        if (isset($events[$index])) {
+            array_splice($events, $index, 1);
+            
+            // Save back to the JSON file
+            if (file_put_contents($jsonFilePath, json_encode($events, JSON_PRETTY_PRINT))) {
+                $successMessage = "Event deleted successfully.";
+            } else {
+                $error = "Failed to delete event.";
+            }
+        } else {
+            $error = "Event not found.";
+        }
     }
 }
 ?>
@@ -58,10 +75,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_index'])) {
         <h1 class="text-center mb-4">Plant Events</h1>
 
         <?php
-        // Show error message if any
+        // Show success or error messages
+        if (!empty($successMessage)) {
+            echo "<div class='alert alert-success'>" . htmlspecialchars($successMessage) . "</div>";
+        }
         if (!empty($error)) {
             echo "<div class='alert alert-danger'>" . htmlspecialchars($error) . "</div>";
-        } elseif (!empty($events)) {
+        }
+
+        if (!empty($events)) {
             echo '<table class="table table-bordered table-striped">';
             echo '<thead>
                     <tr>
@@ -85,6 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_index'])) {
                 echo '<td>';
                 echo '<input type="hidden" name="update_index" value="' . $index . '">';
                 echo '<button type="submit" class="btn btn-success btn-sm">Save</button> ';
+                echo '<button type="submit" name="delete_index" value="' . $index . '" class="btn btn-danger btn-sm">Delete</button> ';
                 echo '<a href="view_events.php" class="btn btn-secondary btn-sm">Cancel</a>';
                 echo '</td>';
                 echo '</form>';
