@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
 $current_page = basename($_SERVER['PHP_SELF']);
 function is_active($page) {
     global $current_page;
@@ -12,6 +14,8 @@ $profile_picture_url = isset($_SESSION['profile_picture']) && !empty($_SESSION['
     ? "../uploads/profile_pictures/" . $_SESSION['profile_picture']
     : $default_avatar;
 ?>
+
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
     <div class="container-fluid">
         <a class="navbar-brand fw-bold" href="#"><i class="fas fa-leaf me-2"></i>Plant-a-base</a>
