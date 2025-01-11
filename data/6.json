@@ -1,1 +1,18 @@
-[{"plant_id":"18","parent_name":"","variety_name":"","event_title":"Did something","event_date":"2025-01-08","event_notes":"sdsdf"},{"plant_id":"13","parent_name":"","variety_name":"","event_title":"Watering","event_date":"2025-01-14","event_notes":"asdasd"}]
+[
+    {
+        "plant_id": "18",
+        "parent_name": "",
+        "variety_name": "",
+        "event_title": "Did something",
+        "event_date": "2025-01-08",
+        "event_notes": "sdsdf"
+    },
+    {
+        "plant_id": "13",
+        "parent_name": "",
+        "variety_name": "",
+        "event_title": "Watering",
+        "event_date": "2025-01-14",
+        "event_notes": "asdasd"
+    }
+]

@@ -42,6 +42,7 @@ $profile_picture_url = isset($_SESSION['profile_picture']) && !empty($_SESSION['
                             <li><a class="dropdown-item" href="user_dashboard.php">Dashboard</a></li>
                             <li><a class="dropdown-item" href="view_events.php">All Plant Events</a></li>
                             <li><a class="dropdown-item" href="new_event.php">Add Event</a></li>
+                            <li><a class="dropdown-item" href="upload_image_form.php">Upload Image</a></li>
                         </ul>
                     </li>
                 <?php endif; ?>
