@@ -40,7 +40,7 @@ $profile_picture_url = isset($_SESSION['profile_picture']) && !empty($_SESSION['
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dashboardDropdown">
                             <li><a class="dropdown-item" href="user_dashboard.php">Dashboard</a></li>
-                            <li><a class="dropdown-item" href="view_events.php">Plant Events</a></li>
+                            <li><a class="dropdown-item" href="view_events.php">All Plant Events</a></li>
                             <li><a class="dropdown-item" href="new_event.php">Add Event</a></li>
                         </ul>
                     </li>
