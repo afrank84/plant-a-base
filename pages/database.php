@@ -89,10 +89,10 @@ try {
                             <td>
                                 <a href="plant.php?id=<?php echo urlencode($plant['plant_id']); ?>" class="btn btn-primary btn-sm">
                                     View
-                                    <?php if (in_array($plant['plant_id'], $plantsWithRecords)): ?>
-                                        <i class="fas fa-clipboard"></i>
-                                    <?php endif; ?>
                                 </a>
+                                <?php if (in_array($plant['plant_id'], $plantsWithRecords)): ?>
+                                    <i class="fa-solid fa-seedling" style="color: green;"></i>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
