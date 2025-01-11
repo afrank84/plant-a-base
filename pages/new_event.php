@@ -47,18 +47,19 @@ try {
             <!-- Select Plant -->
             <div class="mb-3">
                 <label for="plant" class="form-label">Select Plant</label>
-                <select class="form-select" id="plant" name="plant_id" required>
-                    <option value="" disabled selected>Select a plant</option>
-                    <?php
-                    foreach ($plants as $plant) {
-                        echo "<option value='" . htmlspecialchars($plant['plant_id']) . "'>" .
-                            htmlspecialchars($plant['parent_name']) . " - " . htmlspecialchars($plant['variety_name']) .
-                            "</option>";
-                    }
-                    ?>
+                <select id="plant" name="plant_id" class="form-control">
+                    <option value="">-- Select a Plant --</option>
+                    <?php foreach ($plants as $plant): ?>
+                        <option value="<?= htmlspecialchars($plant['plant_id']) ?>"
+                            data-parent-name="<?= htmlspecialchars($plant['parent_name']) ?>"
+                            data-variety-name="<?= htmlspecialchars($plant['variety_name']) ?>">
+                            <?= htmlspecialchars($plant['parent_name'] . ' - ' . $plant['variety_name']) ?>
+                        </option>
+                    <?php endforeach; ?>
                 </select>
-                <div class="invalid-feedback">Please select a plant.</div>
             </div>
+            <input type="hidden" id="parent_name" name="parent_name">
+            <input type="hidden" id="variety_name" name="variety_name">
 
             <!-- Event Title -->
             <div class="mb-3">
@@ -105,5 +106,32 @@ try {
             });
         })();
     </script>
+    <!-- Include jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- Include Select2 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
+
+    <!-- Include Select2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <!-- Initialize Select2 -->
+    <script>
+        $(document).ready(function() {
+            $('#plant').select2({
+                placeholder: "Search for a plant...",
+                allowClear: true
+            });
+        });
+    </script>
+    <script>
+        // Populate hidden fields with selected plant data
+        document.getElementById('plant').addEventListener('change', function () {
+            const selectedOption = this.options[this.selectedIndex];
+            document.getElementById('parent_name').value = selectedOption.dataset.parentName || '';
+            document.getElementById('variety_name').value = selectedOption.dataset.varietyName || '';
+        });
+    </script>
+
 </body>
 </html>
