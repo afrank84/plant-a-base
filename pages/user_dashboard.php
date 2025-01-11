@@ -138,7 +138,7 @@ $plantRecords = [
             new Chart(document.getElementById('plantsPlantedChart'), {
                 type: 'bar',
                 data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                     datasets: [{
                         label: 'Plants Planted',
                         data: <?php echo json_encode($plantsPlantedData); ?>,
@@ -159,7 +159,7 @@ $plantRecords = [
             new Chart(document.getElementById('harvestCountChart'), {
                 type: 'line',
                 data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                     datasets: [{
                         label: 'Harvest Count',
                         data: <?php echo json_encode($harvestCountData); ?>,
