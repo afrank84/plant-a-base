@@ -35,7 +35,7 @@ if (isset($_GET['id'])) {
         $pdo = getConnection();
 
         // Prepare and execute the query to get plant information
-        $stmt = $pdo->prepare("SELECT parent_name, variety_name FROM plants WHERE plant_id = ?");
+        $stmt = $pdo->prepare("SELECT parent_name, variety_name, type FROM plants WHERE plant_id = ?");
         $stmt->execute([$plant_id]);
         $plant = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -43,7 +43,7 @@ if (isset($_GET['id'])) {
             // Extract parent and variety from the result
             $parentName = htmlspecialchars($plant['parent_name']);
             $varietyName = htmlspecialchars($plant['variety_name']);
-            $typeName = htmlspecialchars($_GET['type'] ?? 'Type: Not defined');
+            $typeName = htmlspecialchars($plant['type']); 
             
             // Filter the records for this specific plant_id
             foreach ($allRecords as $record) {
