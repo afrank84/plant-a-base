@@ -232,8 +232,9 @@ if (isset($_GET['id'])) {
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Event Title</th>
                         <th>Event Date</th>
+                        <th>Event Type</th>
+                        <th>Event Title</th>
                         <th>Event Notes</th>
                     </tr>
                 </thead>
@@ -241,8 +242,9 @@ if (isset($_GET['id'])) {
                     <?php foreach ($records as $index => $record): ?>
                         <tr>
                             <td><?php echo $index + 1; ?></td>
-                            <td><?php echo htmlspecialchars($record['event_title']); ?></td>
                             <td><?php echo htmlspecialchars($record['event_date']); ?></td>
+                            <td><?php echo htmlspecialchars($record['event_type']); ?></td>
+                            <td><?php echo htmlspecialchars($record['event_title']); ?></td>
                             <td><?php echo htmlspecialchars($record['event_notes']); ?></td>
                         </tr>
                     <?php endforeach; ?>

@@ -61,6 +61,17 @@ try {
             <input type="hidden" id="parent_name" name="parent_name">
             <input type="hidden" id="variety_name" name="variety_name">
 
+            <!-- Event Type -->
+            <div class="mb-3">
+                <label for="event_type" class="form-label">Event Type:</label>
+                <select id="event_type" name="event_type" class="form-select" required>
+                    <option value="Harvest">Harvest</option>
+                    <option value="Planted">Planted</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+
             <!-- Event Title -->
             <div class="mb-3">
                 <label for="eventTitle" class="form-label">Event Title</label>

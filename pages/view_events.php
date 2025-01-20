@@ -51,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $index = (int)$_POST['update_index'];
         $updatedEvent = [
             'plant_id' => $_POST['plant_id'],
+            'event_type' => $_POST['event_type'],
             'event_title' => $_POST['event_title'],
             'event_date' => $_POST['event_date'],
             'event_notes' => $_POST['event_notes']
@@ -135,6 +136,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <input type="text" class="form-control" name="plant_id" placeholder="Plant ID" required>
                         </div>
                         <div class="col">
+                            <input type="text" class="form-control" name="event_type" placeholder="Event Type" required>
+                        </div>
+                        <div class="col">
                             <input type="text" class="form-control" name="event_title" placeholder="Event Title" required>
                         </div>
                         <div class="col">
@@ -158,6 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <tr>
                         <th>#</th>
                         <th>Plant ID</th>
+                        <th>Event Type</th>
                         <th>Event Title</th>
                         <th>Event Date</th>
                         <th>Event Notes</th>
@@ -170,6 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo '<form method="POST" action="view_events.php">';
                 echo '<td>' . htmlspecialchars($index + 1) . '</td>';
                 echo '<td><input type="text" class="form-control" name="plant_id" value="' . htmlspecialchars($event['plant_id']) . '" required></td>';
+                echo '<td><input type="text" class="form-control" name="event_type" value="' . htmlspecialchars($event['event_type']) . '" ></td>';
                 echo '<td><input type="text" class="form-control" name="event_title" value="' . htmlspecialchars($event['event_title']) . '" required></td>';
                 echo '<td><input type="date" class="form-control" name="event_date" value="' . htmlspecialchars($event['event_date']) . '" required></td>';
                 echo '<td><input type="text" class="form-control" name="event_notes" value="' . htmlspecialchars($event['event_notes']) . '"></td>';

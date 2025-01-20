@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $plant_id = $_POST['plant_id'] ?? null;
     $parent_name = $_POST['parent_name'] ?? null;
     $variety_name = $_POST['variety_name'] ?? null;
+    $event_type = $_POST['event_type'] ?? null;
     $event_title = $_POST['event_title'] ?? null;
     $event_date = $_POST['event_date'] ?? null;
     $event_notes = $_POST['event_notes'] ?? '';
@@ -32,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'plant_id' => $plant_id,
             'parent_name' => $parent_name,
             'variety_name' => $variety_name,
+            'event_type' => $event_type,
             'event_title' => $event_title,
             'event_date' => $event_date,
             'event_notes' => $event_notes
