@@ -14,6 +14,12 @@ $harvestCountData = [5, 10, 15, 20, 25, 30];
 $bestPlantsData = [50, 40, 30, 20, 10];
 $popularPlantsData = [30, 25, 20, 15, 10];
 
+// Placeholder data for the new Cost and Profit chart
+$costData = [100, 200, 150, 250, 180, 300, 220, 280, 160, 240, 200, 260];
+$profitData = [150, 180, 250, 200, 300, 220, 280, 160, 240, 200, 260, 180];
+$labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+
 // Placeholder data for plant records
 $plantRecords = [
     ['date' => '2024-05-01', 'event' => 'Seed Sowing', 'location' => 'Indoor Tray', 'notes' => 'Used organic potting mix'],
@@ -45,6 +51,22 @@ $plantRecords = [
 
     <div class="container mt-5">
         <h1 id="plant-dashboard" class="text-center mb-5">Plant Dashboard</h1>
+
+        <div style="width: 100%; margin-bottom: 20px;">
+            <canvas id="costProfitChart" width="400" height="200"></canvas>
+        </div>
+
+        <div style="display: flex;">
+            <div style="width: 50%;">
+                <!-- Left column chart -->
+                <canvas id="plantsPlantedChart" width="400" height="200"></canvas>
+            </div>
+            <div style="width: 50%;">
+                <!-- Right column chart -->
+                <canvas id="harvestCountChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+
 
         <div class="row">
             <div class="col-md-6 mb-4">
@@ -133,7 +155,58 @@ $plantRecords = [
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        
         document.addEventListener('DOMContentLoaded', function() {
+            // Cost and Profit Chart
+            const costProfitCtx = document.getElementById('costProfitChart').getContext('2d');
+            new Chart(costProfitCtx, {
+                type: 'line',
+                data: {
+                    labels: <?php echo json_encode($labels); ?>,
+                    datasets: [
+                        {
+                            label: 'Cost',
+                            data: <?php echo json_encode($costData); ?>,
+                            borderColor: 'red',
+                            borderWidth: 2,
+                            fill: false
+                        },
+                        {
+                            label: 'Profit',
+                            data: <?php echo json_encode($profitData); ?>,
+                            borderColor: 'green',
+                            borderWidth: 2,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Months'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Amount'
+                            }
+                        }
+                    }
+                }
+            });
+
+
+
+
             // Plants Planted Chart
             new Chart(document.getElementById('plantsPlantedChart'), {
                 type: 'bar',
