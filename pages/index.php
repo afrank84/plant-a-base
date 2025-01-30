@@ -1,4 +1,3 @@
-
 <?php
 // You might want to include any necessary PHP logic here
 ?>
