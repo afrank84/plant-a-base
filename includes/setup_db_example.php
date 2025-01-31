@@ -63,7 +63,6 @@ $createUsersTableQuery = "CREATE TABLE IF NOT EXISTS users (
     username VARCHAR(255) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    fullname VARCHAR(255) NOT NULL,
     role VARCHAR(255) NOT NULL DEFAULT 'user',
     subscription VARCHAR(255) NOT NULL DEFAULT 'free',
     profile_picture VARCHAR(255),
