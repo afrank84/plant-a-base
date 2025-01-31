@@ -1,4 +1,5 @@
 <?php
+session_start(); // Ensure this is at the very top
 require_once '../includes/db_connection.php';
 
 $error = '';
@@ -62,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 <body>
-    <div id="menu-placeholder"></div>
+    <?php include '../includes/menu.php'; ?>
     <div class="container mt-5">
         <h1 class="text-center mb-5">Sign Up</h1>
         

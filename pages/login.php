@@ -1,6 +1,7 @@
 <?php
+session_start(); // Ensure this is at the very top
 require_once '../includes/db_connection.php';
-session_start();
+
 
 // Redirect if already logged in
 if (isset($_SESSION['user_id'])) {
@@ -62,7 +63,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <?php include '../includes/menu.php'; ?>
-
     <div class="container mt-5">
         <h1 class="text-center mb-5">Login</h1>
         
