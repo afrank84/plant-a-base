@@ -1,5 +1,5 @@
 <?php
-// You might want to include any necessary PHP logic here
+session_start(); // Ensure this is at the very top
 ?>
 <!DOCTYPE html>
 <html lang="en">
