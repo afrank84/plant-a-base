@@ -21,7 +21,7 @@ try {
         INSERT INTO plants (
             parent_name, variety_name, type, dtg_days_to_grow, dth_days_to_harvest, depth_to_sow, seed_spacing, row_spacing, 
             seed_image_url, plant_image_url, fruit_image_url, flower_image_url, img_customer_filename, 
-            zone_1, zone_2, zone_3, zone_4, zone_5, zone_6, zone_7, zone_8, zone_9, zone_10, zone_11, zone_12, zone_13
+            zone_1, zone_2, zone_3, zone_4, zone_5, zone_6, zone_7, zone_8, zone_9, zone_10, zone_11, zone_12
         ) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ");
@@ -46,7 +46,7 @@ try {
             $seed_image_url, $plant_image_url, $fruit_image_url, $flower_image_url, $img_customer_filename, 
             $zone_values[0], $zone_values[1], $zone_values[2], $zone_values[3], $zone_values[4], 
             $zone_values[5], $zone_values[6], $zone_values[7], $zone_values[8], $zone_values[9], 
-            $zone_values[10], $zone_values[11], $zone_values[12], 
+            $zone_values[10], $zone_values[11], $zone_values[12]
         ]);
         
     }
