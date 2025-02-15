@@ -56,6 +56,17 @@ The aim of Plant-a-base is to make it easier for plant lovers to grow and care f
 2. Serve the HTML file using any static file server or directly in a browser.
 3. Ensure required external dependencies are accessible (Bootstrap, Font Awesome, custom scripts).
 
+### Docker
+Navigate to the docker-compose.yml file and run this.
+*Note that docker-compose.yml is not yet in this repo. 
+```
+docker-compose up -d
+```
+Port is setup for 1000
+```
+http://localhost:1000/plant-a-base/
+```
+
 ### Project Structure
 - `index.html`: Main webpage structure.
 - `css/`: Custom styling and Bootstrap links.
